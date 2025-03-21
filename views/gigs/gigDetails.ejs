@@ -1,0 +1,16 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+  <h1 class="mb-4"><%= gig.title %></h1>
+
+  <p><strong>Description:</strong></p>
+  <p><%= gig.description %></p>
+
+  <p><strong>Price:</strong> ₹<%= gig.price %></p>
+
+  <p><strong>Posted By:</strong> <%= gig.postedBy ? gig.postedBy.username : 'Unknown' %></p>
+
+  <a href="/gigs" class="btn btn-secondary">Back to Gigs</a>
+</div>
+
+<%- include('../partials/footer') %>

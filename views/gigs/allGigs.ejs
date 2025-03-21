@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+
+<div class="container mt-5">
+  <h1 class="mb-4">Available Gigs</h1>
+
+  <% if (gigs.length === 0) { %>
+    <p>No gigs posted yet.</p>
+  <% } else { %>
+    <div class="row">
+      <% gigs.forEach(gig => { %>
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 shadow">
+            <div class="card-body">
+              <h5 class="card-title"><%= gig.title %></h5>
+              <p class="card-text"><%= gig.description.substring(0, 100) %>...</p>
+              <p class="card-text"><strong>Price:</strong> ₹<%= gig.price %></p>
+              <a href="/gigs/<%= gig._id %>" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <% if (currentUser) { %>
+    <a href="/gigs/new" class="btn btn-success mt-4">Post a Gig</a>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

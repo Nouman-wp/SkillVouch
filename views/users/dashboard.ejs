@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+    <h2>Your Dashboard</h2>
+    <a href="/gigs/create" class="btn btn-primary my-3">Post a New Gig</a>
+
+    <div class="row">
+        <% if (userGigs.length > 0) { %>
+            <% userGigs.forEach(gig => { %>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="<%= gig.image %>" class="card-img-top" alt="<%= gig.title %>">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= gig.title %></h5>
+                            <p class="card-text"><%= gig.description %></p>
+                            <a href="/gigs/<%= gig._id %>" class="btn btn-info">View Gig</a>
+                            <a href="/gigs/edit/<%= gig._id %>" class="btn btn-warning">Edit</a>
+                            <a href="/gigs/delete/<%= gig._id %>" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>You have no gigs posted yet. Start by posting your first gig!</p>
+        <% } %>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
