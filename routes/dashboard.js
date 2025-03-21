@@ -8,7 +8,7 @@ router.get('/', ensureAuthenticated, async (req, res) => {
     try {
         // Find gigs created by the current user
         const userGigs = await Gig.find({ createdBy: req.user._id });
-        res.render('dashboard', { userGigs });
+        res.render('/users/dashboard', { userGigs });
     } catch (err) {
         req.flash('error', 'Something went wrong!');
         res.redirect('/');

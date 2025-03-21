@@ -19,3 +19,26 @@ body {
     text-decoration: underline;
   }
   
+  /* Navbar profile dropdown */
+.navbar-nav .dropdown-menu {
+    min-width: 200px;
+  }
+  
+  .navbar-nav .dropdown-item {
+    padding: 10px 20px;
+  }
+  
+  .navbar-nav .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+  
+  /* Profile image hover effect */
+  .navbar-nav img.rounded-circle {
+    transition: transform 0.3s ease;
+  }
+  
+  .navbar-nav img.rounded-circle:hover {
+    transform: scale(1.1);
+  }
+  
