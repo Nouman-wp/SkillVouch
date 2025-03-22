@@ -8,6 +8,10 @@ const flash = require('connect-flash');
 require('./config/passport');
 const { isLoggedIn } = require('./middleware/middleware');
 const dashboardRoutes = require('./routes/dashboard');
+app.use(express.static('public'));
+app.use('/uploads', express.static('uploads'));
+
+
 
 
 // ✅ Just require the file, no need to assign

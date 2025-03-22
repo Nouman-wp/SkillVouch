@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Gig = require('../models/Gig');
 const { isLoggedIn } = require('../middleware/middleware');
+const multer = require('multer');
+const path = require('path');
+const Application = require('../models/Application');
 
 // View all gigs
 router.get('/', async (req, res) => {
@@ -23,16 +26,6 @@ router.post('/', isLoggedIn, async (req, res) => {
     res.redirect('/gigs');
 });
 
-// View single gig
-router.get('/:id', async (req, res) => {
-    const gig = await Gig.findById(req.params.id).populate('postedBy');
-    if (!gig) {
-        req.flash('error', 'Gig not found');
-        return res.redirect('/gigs');
-    }
-    res.render('gigs/gigDetails', { gig });
-});
-
 // Edit Gig Route
 router.get('/edit/:id', isLoggedIn, async (req, res) => {
     try {
@@ -47,7 +40,6 @@ router.get('/edit/:id', isLoggedIn, async (req, res) => {
         res.redirect('/dashboard');
     }
 });
-
 
 // Delete Gig Route
 router.get('/delete/:id', isLoggedIn, async (req, res) => {
@@ -66,8 +58,65 @@ router.get('/delete/:id', isLoggedIn, async (req, res) => {
     }
 });
 
+// Multer Setup for resume upload
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/resumes/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+const upload = multer({
+    storage: storage,
+    fileFilter: function (req, file, cb) {
+        if (file.mimetype === 'application/pdf') cb(null, true);
+        else cb(new Error('Only PDF files are allowed!'));
+    }
+});
 
+// Apply to a gig with resume upload
+router.post('/:id/apply', isLoggedIn, upload.single('resume'), async (req, res) => {
+    try {
+        const gig = await Gig.findById(req.params.id);
+        if (!gig) {
+            req.flash('error', 'Gig not found');
+            return res.redirect('/gigs');
+        }
 
+        const application = new Application({
+            gig: gig._id,
+            applicant: req.user._id,
+            message: req.body.message,
+            resume: req.file.path
+        });
 
+        await application.save();
+        req.flash('success', 'Application submitted successfully!');
+        res.redirect(`/gigs/${gig._id}`);
+    } catch (err) {
+        console.error(err);
+        req.flash('error', 'Failed to apply. Please try again.');
+        res.redirect(`/gigs/${req.params.id}`);
+    }
+});
+
+// ✅ Final View single gig with applications
+router.get('/:id', async (req, res) => {
+    try {
+        const gig = await Gig.findById(req.params.id).populate('postedBy');
+        if (!gig) {
+            req.flash('error', 'Gig not found');
+            return res.redirect('/gigs');
+        }
+
+        const applications = await Application.find({ gig: gig._id }).populate('applicant');
+        res.render('gigs/gigDetails', { gig, applications });
+    } catch (err) {
+        console.error(err);
+        req.flash('error', 'Something went wrong');
+        res.redirect('/gigs');
+    }
+});
 
 module.exports = router;

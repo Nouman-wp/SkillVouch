@@ -1,16 +1,69 @@
 <%- include('../partials/header') %>
 
-<div class="container mt-5">
-  <h1 class="mb-4"><%= gig.title %></h1>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h1 class="card-title fw-bold mb-4"><%= gig.title %></h1>
 
-  <p><strong>Description:</strong></p>
-  <p><%= gig.description %></p>
+          <p class="fs-5"><strong>Description:</strong></p>
+          <p class="text-muted"><%= gig.description %></p>
 
-  <p><strong>Price:</strong> ₹<%= gig.price %></p>
+          <p class="fs-5"><strong>Price:</strong> <span class="text-success">₹<%= gig.price %></span></p>
 
-  <p><strong>Posted By:</strong> <%= gig.postedBy ? gig.postedBy.username : 'Unknown' %></p>
+          <p class="fs-5"><strong>Posted By:</strong> <%= gig.postedBy ? gig.postedBy.username : 'Unknown' %></p>
 
-  <a href="/gigs" class="btn btn-secondary">Back to Gigs</a>
+          <a href="/gigs" class="btn btn-secondary mt-4">← Back to Gigs</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apply Section -->
+    <div class="col-lg-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h4 class="fw-semibold mb-3">Apply for this Gig</h4>
+          
+          <% if (currentUser) { %>
+            <form action="/gigs/<%= gig._id %>/apply" method="POST" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label class="form-label">Your Message</label>
+                <textarea class="form-control" name="message" rows="4" placeholder="Tell why you're the right fit..." required></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Upload Resume (PDF Only)</label>
+                <input type="file" class="form-control" name="resume" accept="application/pdf" required>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Apply Now</button>
+            </form>
+          <% } else { %>
+            <div class="alert alert-warning">
+              Please <a href="/auth/login">login</a> to apply for this gig.
+            </div>
+          <% } %>
+          <% if (currentUser && gig.postedBy && currentUser._id.toString() === gig.postedBy._id.toString()) { %>
+            <div class="mt-5">
+              <h3>Applications</h3>
+              <% if (applications.length === 0) { %>
+                <p class="text-muted">No applications yet.</p>
+              <% } else { %>
+                <% applications.forEach(app => { %>
+                  <div class="card shadow-sm mb-3">
+                    <div class="card-body">
+                      <h5>Applicant: <%= app.applicant.username %></h5>
+                      <p><strong>Message:</strong> <%= app.message %></p>
+                      <a href="/<%= app.resume %>" target="_blank" class="btn btn-sm btn-primary">View Resume</a>
+                    </div>
+                  </div>
+                <% }) %>
+              <% } %>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <%- include('../partials/footer') %>
