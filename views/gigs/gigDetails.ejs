@@ -43,51 +43,61 @@
     </div>
 
     <!-- Apply Section (only for non-owners) -->
-    <div class="col-lg-4">
-      <div class="card shadow-sm border-0">
-        <div class="card-body">
-          <% if (currentUser && gig.postedBy && currentUser._id.toString() === gig.postedBy._id.toString()) { %>
-            <!-- Owner's View: Applications Section -->
-            <h3 class="fw-semibold mb-3">Applications</h3>
-            <% if (applications.length === 0) { %>
-              <p class="text-muted">No applications yet.</p>
-            <% } else { %>
-              <% applications.forEach(app => { %>
-                <div class="card shadow-sm mb-3">
-                  <div class="card-body">
-                    <h5>Applicant: <%= app.applicant.username %></h5>
-                    <p><strong>Message:</strong> <%= app.message %></p>
-                    <a href="/<%= app.resume %>" target="_blank" class="btn btn-sm btn-primary">View Resume</a>
-                  </div>
-                </div>
-              <% }) %>
-            <% } %>
+    <!-- Apply Section (only for non-owners) -->
+<div class="col-lg-4">
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
 
-          <% } else { %>
-            <!-- Non-owner's View: Apply Form -->
-            <h4 class="fw-semibold mb-3">Apply for this Gig</h4>
-
-            <% if (currentUser) { %>
-              <form action="/gigs/<%= gig._id %>/apply" method="POST" enctype="multipart/form-data">
-                <div class="mb-3">
-                  <label class="form-label">Your Message</label>
-                  <textarea class="form-control" name="message" rows="4" placeholder="Tell why you're the right fit..." required></textarea>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label">Upload Resume (PDF Only)</label>
-                  <input type="file" class="form-control" name="resume" accept="application/pdf" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Apply Now</button>
-              </form>
-            <% } else { %>
-              <div class="alert alert-warning">
-                Please <a href="/auth/login">login</a> to apply for this gig.
+      <% if (currentUser && gig.postedBy && currentUser._id.toString() === gig.postedBy._id.toString()) { %>
+        <!-- Owner's View: Applications Section -->
+        <h3 class="fw-semibold mb-3">Applications</h3>
+        <% if (applications.length === 0) { %>
+          <p class="text-muted">No applications yet.</p>
+        <% } else { %>
+          <% applications.forEach(app => { %>
+            <div class="card shadow-sm mb-3">
+              <div class="card-body">
+                <h5>Applicant: <%= app.applicant.username %></h5>
+                <p><strong>Message:</strong> <%= app.message %></p>
+                <a href="/<%= app.resume %>" target="_blank" class="btn btn-sm btn-primary">View Resume</a>
               </div>
-            <% } %>
-          <% } %>
+            </div>
+          <% }) %>
+        <% } %>
+
+      <% } else if (currentUser && currentUser.role === 'Organization') { %>
+        <!-- Organizations cannot apply -->
+        <div class="alert alert-info">
+          Organizations are not allowed to apply for gigs.
         </div>
-      </div>
+
+      <% } else { %>
+        <!-- Non-owner's View: Apply Form -->
+        <h4 class="fw-semibold mb-3">Apply for this Gig</h4>
+
+        <% if (currentUser) { %>
+          <form action="/gigs/<%= gig._id %>/apply" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label class="form-label">Your Message</label>
+              <textarea class="form-control" name="message" rows="4" placeholder="Tell why you're the right fit..." required></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Upload Resume (PDF Only)</label>
+              <input type="file" class="form-control" name="resume" accept="application/pdf" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Apply Now</button>
+          </form>
+        <% } else { %>
+          <div class="alert alert-warning">
+            Please <a href="/auth/login">login</a> to apply for this gig.
+          </div>
+        <% } %>
+      <% } %>
+
     </div>
+  </div>
+</div>
+
   </div>
 </div>
 
