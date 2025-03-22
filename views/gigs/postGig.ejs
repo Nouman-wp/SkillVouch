@@ -21,22 +21,20 @@
 
     <div class="mb-3">
       <label for="location" class="form-label">Location</label>
-      <input type="text" name="location" class="form-control" placeholder="e.g., Delhi, India or Remote" required>
+      <input type="text" class="form-control" id="location" name="location" placeholder="e.g., Delhi, India" required>
     </div>
 
     <div class="mb-3">
-      <label for="mode" class="form-label">Mode of Work</label>
-      <select name="mode" class="form-select" required>
-        <option value="">Select Mode</option>
-        <option value="On-site">On-site</option>
+      <label for="mode" class="form-label">Mode</label>
+      <select class="form-control" id="mode" name="mode" required>
         <option value="Remote">Remote</option>
+        <option value="On-site">On-site</option>
         <option value="Hybrid">Hybrid</option>
       </select>
     </div>
-
     <div class="mb-3">
-      <label for="skillsRequired" class="form-label">Skills Required (comma separated)</label>
-      <input type="text" name="skillsRequired" class="form-control" placeholder="e.g., JavaScript, React, Node.js">
+      <label for="skillsRequired" class="form-label">Skills Required (comma-separated)</label>
+      <input type="text" class="form-control" id="skillsRequired" name="skillsRequired" placeholder="e.g., JavaScript, Node.js, React" required>
     </div>
 
     <div class="mb-3">
@@ -44,10 +42,10 @@
       <input type="date" name="deadline" class="form-control">
     </div>
 
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <label for="image" class="form-label">Gig Image URL (Optional)</label>
       <input type="text" name="image" class="form-control" placeholder="https://example.com/image.jpg">
-    </div>
+    </div> -->
 
     <button type="submit" class="btn btn-success px-4 py-2">Create Gig</button>
   </form>

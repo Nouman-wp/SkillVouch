@@ -19,8 +19,19 @@ router.get('/new', isLoggedIn, (req, res) => {
 
 // Create a new gig
 router.post('/', isLoggedIn, async (req, res) => {
-    const { title, description, price } = req.body;
-    const gig = new Gig({ title, description, price, postedBy: req.user._id });
+    const { title, description, price, location, mode, skillsRequired, deadline } = req.body;
+
+    const gig = new Gig({
+        title,
+        description,
+        price,
+        location,
+        mode,
+        skillsRequired: skillsRequired.split(',').map(skill => skill.trim()),  // Convert to array
+        deadline,
+        postedBy: req.user._id
+    });
+
     await gig.save();
     req.flash('success', 'Gig created successfully!');
     res.redirect('/gigs');
@@ -135,5 +146,10 @@ router.get('/:id', async (req, res) => {
         res.redirect('/gigs');
     }
 });
+
+
+
+
+
 
 module.exports = router;

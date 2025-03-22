@@ -27,11 +27,6 @@ const gigSchema = new mongoose.Schema({
         type: Date  // Optional deadline for the gig
     },
 
-    image: {
-        type: String,
-        default: '/images/default-job.png'  // Optional gig image for UI
-    },
-
     createdAt: {
         type: Date,
         default: Date.now
