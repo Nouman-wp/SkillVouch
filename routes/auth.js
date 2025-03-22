@@ -5,7 +5,7 @@ const User = require('../models/User');
 const multer = require('multer');
 const path = require('path');
 
-// Multer storage setup
+// Multer storage setup for profile image uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, 'public/uploads/profiles'),
   filename: (req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`)
@@ -22,23 +22,27 @@ const upload = multer({
   }
 });
 
-// Register Route
+
+// GET Register Page
 
 router.get('/register', (req, res) => {
   res.render('auth/register');
 });
 
 
+// POST Register New User
+
 router.post('/register', upload.single('profileImage'), async (req, res) => {
   try {
-    const { username, email, bio, password } = req.body;
+    const { username, email, bio, password, role } = req.body;
 
-
-    if (!username) {
-      req.flash('error', 'Username is required');
+    // Input validations
+    if (!username || !email || !password) {
+      req.flash('error', 'Username, Email, and Password are required!');
       return res.redirect('/auth/register');
     }
 
+    // Set profile image
     let profileImage = '/images/default.png';
     if (req.file) {
       profileImage = `/uploads/profiles/${req.file.filename}`;
@@ -48,19 +52,20 @@ router.post('/register', upload.single('profileImage'), async (req, res) => {
       username,
       email,
       bio,
+      role,
       profileImage
     });
 
-    
     const registeredUser = await User.register(newUser, password);
 
-    
+    // Auto login after registration
     req.login(registeredUser, (err) => {
       if (err) {
         console.log(err);
+        req.flash('error', 'Auto login failed. Please login manually.');
         return res.redirect('/auth/login');
       }
-      req.flash('success', 'Registered successfully');
+      req.flash('success', 'Registered successfully! Welcome.');
       res.redirect('/');
     });
 
@@ -70,10 +75,16 @@ router.post('/register', upload.single('profileImage'), async (req, res) => {
     res.redirect('/auth/register');
   }
 });
-// Login Route
+
+
+// GET Login Page
+
 router.get('/login', (req, res) => {
   res.render('auth/login');
 });
+
+
+// POST Login
 
 router.post('/login', passport.authenticate('local', {
   failureFlash: true,
@@ -83,46 +94,15 @@ router.post('/login', passport.authenticate('local', {
   res.redirect('/');
 });
 
-// Logout Route
+
+// GET Logout
+
 router.get('/logout', (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
-    req.flash('success', 'Logged out successfully');
+    req.flash('success', 'Logged out successfully.');
     res.redirect('/');
   });
 });
-
-
-
-// REGISTER Route
-router.get('/register', (req, res) => {
-  res.render('auth/register');
-});
-
-router.post('/register', upload.single('profileImage'), async (req, res) => {
-  try {
-    const { username, email, bio, password } = req.body;
-    let profileImage = '/images/default.png'; // Default image path
-
-    if (req.file) {
-      profileImage = `/uploads/profiles/${req.file.filename}`;
-    }
-
-    const newUser = new User({
-      username,
-      email,
-      bio,
-      profileImage
-    });
-
-    await User.register(newUser, password);
-    res.redirect('/auth/login');
-  } catch (err) {
-    console.log(err);
-    res.redirect('/auth/register');
-  }
-});
-
-
 
 module.exports = router;

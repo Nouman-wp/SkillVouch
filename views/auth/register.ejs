@@ -6,9 +6,21 @@
     <input type="text" name="username" placeholder="Username" required><br>
     <input type="email" name="email" placeholder="Email" required><br>
     <textarea name="bio" placeholder="About you..." required></textarea><br>
+
+    <!-- Role Selection Dropdown -->
+    <label>Select Your Role:</label><br>
+    <select name="role" required>
+      <option value="" disabled selected>Select role</option>
+      <option value="Applicant">Applicant / User</option>
+      <option value="Recruiter">Recruiter</option>
+      <option value="Organization">Organization</option>
+    </select><br><br>
+
     <input type="password" name="password" placeholder="Password" required><br>
+
     <label>Upload Profile Picture:</label><br>
     <input type="file" name="profileImage" accept="image/*"><br><br>
+
     <button type="submit">Register</button>
   </form>
 </div>
@@ -32,7 +44,8 @@
   }
 
   .register-container input,
-  .register-container textarea {
+  .register-container textarea,
+  .register-container select {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
@@ -62,7 +75,7 @@
 
 <script>
   const form = document.getElementById('registerForm');
-  form.addEventListener('submit', () => {
+  form.addEventListener('submit', (event) => {
     const fileInput = form.querySelector('input[type="file"]');
     if (fileInput.files.length > 0) {
       const file = fileInput.files[0];

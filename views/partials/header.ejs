@@ -100,10 +100,24 @@
                 <li><a href="/auth/login">Login</a></li>
               <% } else { %>
                 <li><a href="/users/profile">Profile</a></li>
-                <li><a href="/dashboard">Dashboard</a></li>
+              
+                <!-- Role-Based Dashboard Link -->
+                <li>
+                  <% if (currentUser.role === 'Applicant') { %>
+                    <a href="/dashboard">Dashboard</a>
+                  <% } else if (currentUser.role === 'Organization') { %>
+                    <a href="/org/dashboard">Dashboard</a>
+                  <% } else if (currentUser.role === 'Recruiter') { %>
+                    <a href="/rec/dashboard">Dashboard</a>
+                  <% } else { %>
+                    <a href="/dashboard">Dashboard</a>
+                  <% } %>
+                </li>
+              
                 <li><a href="/gigs/applied">Applied Gigs</a></li>
                 <li><a href="/auth/logout">Logout</a></li>
               <% } %>
+              
             </ul>
           </li>
         </ul>

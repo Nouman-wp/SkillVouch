@@ -10,6 +10,7 @@ const { isLoggedIn } = require('./middleware/middleware');
 const dashboardRoutes = require('./routes/dashboard');
 app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));
+const recruiterRoutes = require('./routes/recruiter');
 
 
 
@@ -32,6 +33,8 @@ app.use(session({ secret: 'skillvouch', resave: false, saveUninitialized: true }
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+const organizationRoutes = require('./routes/organization');
+const PORT = process.env.PORT || 5000;
 
 // Flash and user middleware
 app.use((req, res, next) => {
@@ -51,6 +54,28 @@ app.use('/', require('./routes/index'));
 app.use('/auth', authRoutes);
 app.use('/gigs', require('./routes/gigs'));
 app.use('/users', require('./routes/users'));
+app.use('/', organizationRoutes);
 
-const PORT = process.env.PORT || 5000;
+app.use(recruiterRoutes);
+
+
+app.use((req, res, next) => {
+    res.status(404).render('error', {
+      statusCode: 404,
+      message: "Sorry, the page you're looking for doesn't exist."
+    });
+  });
+  
+
+  app.use((err, req, res, next) => {
+    const statusCode = err.status || 500;
+    res.status(statusCode).render('error', {
+      statusCode,
+      message: err.message || "Something went wrong. Please try again later."
+    });
+  });
+  
+
 app.listen(PORT, () => console.log(`Server running on localhost:${PORT}`));
+
+app.use('/organization', organizationRoutes);

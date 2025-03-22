@@ -12,9 +12,15 @@ const userSchema = new mongoose.Schema({
         linkedin: String,
         twitter: String
     },
+    role: {
+        type: String,
+        enum: ['Applicant', 'Recruiter', 'Organization'],
+        default: 'Applicant'
+    },
     gigsPosted: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Gig' }],
     gigsApplied: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Gig' }]
 });
+
 
 userSchema.plugin(passportLocalMongoose);
 
