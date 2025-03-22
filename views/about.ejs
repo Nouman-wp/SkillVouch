@@ -1,0 +1,106 @@
+<%- include('./partials/header') %>
+
+
+  <title>About | SkillVouch</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f9f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .about-container {
+      max-width: 900px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+    }
+
+    .about-container:hover {
+      transform: translateY(-5px);
+    }
+
+    h1 {
+      color: #007bff;
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+
+    .team {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .member {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      transition: 0.3s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .member:hover {
+      background-color: #007bff;
+      color: #fff;
+      transform: translateY(-8px);
+    }
+
+    .member h3 {
+      margin-bottom: 10px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+
+
+<body>
+
+  <div class="about-container">
+    <h1>About SkillVouch</h1>
+    <p>Welcome to <strong>SkillVouch</strong> — a platform where students, freelancers, and startups connect to
+      showcase their skills, find gigs, and grow together. Our mission is to bridge the gap between raw talent and real-world
+      opportunities, empowering students to monetize their skills while providing startups with the right talent.</p>
+
+    <p>SkillVouch is designed to be intuitive, fast, and effective. Whether you're looking to gain freelance experience, build
+      your portfolio, or find the perfect gig — SkillVouch has got your back!</p>
+
+    <p>Join us on this journey to build a community where talent is valued, growth is limitless, and learning never stops.</p>
+
+    <a href="/" class="back-btn">Back to Home</a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log("About page loaded!");
+    });
+  </script>
+
+</body>
+<%- include('./partials/footer') %>

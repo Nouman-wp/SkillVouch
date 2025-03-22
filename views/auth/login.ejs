@@ -1,10 +1,95 @@
 <%- include('../partials/header') %>
 
-<h2>Login</h2>
-<form action="/auth/login" method="POST">
-    <input type="text" name="username" placeholder="Username" required><br>
-    <input type="password" name="password" placeholder="Password" required><br>
-    <button type="submit">Login</button>
-</form>
+<style>
+    body {
+        background-color: #f4f9f9;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .login-container {
+        max-width: 400px;
+        margin: 80px auto;
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+    }
+
+    .login-container:hover {
+        transform: translateY(-5px);
+    }
+
+    .login-container h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #007bff;
+        font-size: 2rem;
+    }
+
+    .login-container input {
+        width: 100%;
+        padding: 15px;
+        margin: 15px 0;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        transition: border-color 0.3s;
+    }
+
+    .login-container input:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+
+    .login-container button {
+        width: 100%;
+        padding: 15px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .login-container button:hover {
+        background-color: #0056b3;
+    }
+
+    .login-container .register-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #333;
+    }
+
+    .login-container .register-link a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .login-container .register-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="login-container">
+    <h2>Login to SkillVouch</h2>
+    <form action="/auth/login" method="POST">
+        <input type="text" name="username" placeholder="Enter your username" required>
+        <input type="password" name="password" placeholder="Enter your password" required>
+        <button type="submit">Login</button>
+    </form>
+
+    <div class="register-link">
+        Don't have an account? <a href="/auth/register">Register here</a>
+    </div>
+</div>
+
+<script>
+    console.log("Login page loaded");
+</script>
 
 <%- include('../partials/footer') %>

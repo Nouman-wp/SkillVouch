@@ -83,13 +83,17 @@
 
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="/gigs">Gigs</a></li>
+          <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="/gigs">Explore Gigs</a></li>
 
           <li class="nav-item account-dropdown">
             <div class="account-toggle">
               <img src="<%= currentUser && currentUser.profileImage ? currentUser.profileImage : '/images/default.png' %>" alt="Profile" class="profile-img">
-              <span>Account</span>
+              
+              <!-- ✅ Username if logged in, otherwise "Account" -->
+              <span><%= currentUser ? currentUser.username : 'Account' %></span>
             </div>
+
             <ul class="dropdown-content">
               <% if (!currentUser) { %>
                 <li><a href="/auth/register">Register</a></li>
