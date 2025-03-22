@@ -30,33 +30,50 @@ router.post('/', isLoggedIn, async (req, res) => {
 router.get('/edit/:id', isLoggedIn, async (req, res) => {
     try {
         const gig = await Gig.findById(req.params.id);
-        if (gig.createdBy.toString() !== req.user._id.toString()) {
+        if (!gig) {
+            req.flash('error', 'Gig not found!');
+            return res.redirect('/dashboard');
+        }
+
+        if (gig.postedBy.toString() !== req.user._id.toString()) {
             req.flash('error', 'You do not have permission to edit this gig.');
             return res.redirect('/dashboard');
         }
+
         res.render('gigs/edit', { gig });
     } catch (err) {
+        console.error(err);
         req.flash('error', 'Gig not found!');
         res.redirect('/dashboard');
     }
 });
 
+
+
 // Delete Gig Route
 router.get('/delete/:id', isLoggedIn, async (req, res) => {
     try {
         const gig = await Gig.findById(req.params.id);
-        if (gig.createdBy.toString() !== req.user._id.toString()) {
+        if (!gig) {
+            req.flash('error', 'Gig not found!');
+            return res.redirect('/dashboard');
+        }
+
+        if (gig.postedBy.toString() !== req.user._id.toString()) {
             req.flash('error', 'You do not have permission to delete this gig.');
             return res.redirect('/dashboard');
         }
+
         await Gig.findByIdAndDelete(req.params.id);
         req.flash('success', 'Gig deleted successfully!');
         res.redirect('/dashboard');
     } catch (err) {
+        console.error(err);
         req.flash('error', 'Something went wrong!');
         res.redirect('/dashboard');
     }
 });
+
 
 // Multer Setup for resume upload
 const storage = multer.diskStorage({

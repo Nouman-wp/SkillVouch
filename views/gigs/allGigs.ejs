@@ -1,21 +1,130 @@
 <%- include('../partials/header') %>
 
+<style>
+  body {
+    background-color: #f8f9fa;
+  }
+
+  .gig-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #fff;
+    border: none;
+  }
+
+  .gig-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .creator-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #fff;
+    object-fit: contain; /* ✅ Keeps image contained without zoom */
+    border: 3px solid #007bff;
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  .gig-price {
+    font-size: 1.4rem;
+    color: #28a745;
+    font-weight: 600;
+  }
+
+  .poster-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+  }
+
+  .poster-name {
+    cursor: pointer;
+    position: relative;
+  }
+
+  /* Profile popup */
+  .profile-popup {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #007bff;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+  }
+
+  .poster-info:hover .profile-popup,
+  .poster-name:hover .profile-popup {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .profile-popup a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .profile-popup a:hover {
+    text-decoration: underline;
+  }
+
+  .gig-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .btn-post-gig {
+    font-size: 1.1rem;
+    padding: 12px 24px;
+  }
+</style>
+
 <div class="container mt-5">
-  <h1 class="mb-4">Available Gigs</h1>
+  <h1 class="mb-5 text-center fw-bold">Explore Available Gigs</h1>
 
   <% if (gigs.length === 0) { %>
-    <p>No gigs posted yet.</p>
+    <p class="text-center fs-4">No gigs posted yet. Be the first to post!</p>
   <% } else { %>
     <div class="row">
       <% gigs.forEach(gig => { %>
         <div class="col-md-4 mb-4">
-          <div class="card h-100 shadow">
-            <div class="card-body">
-              <h5 class="card-title"><%= gig.title %></h5>
-              <p class="card-text"><%= gig.description.substring(0, 100) %>...</p>
-              <p class="card-text"><strong>Price:</strong> ₹<%= gig.price %></p>
-              <a href="/gigs/<%= gig._id %>" class="btn btn-primary">View Details</a>
+          <div class="card h-100 gig-card shadow-sm p-3">
+
+            <div class="poster-info mb-3">
+              <img src="<%= gig.postedBy.profileImage || '/images/default-user.png' %>" 
+                   alt="Poster Image" 
+                   class="creator-img"
+                   onclick="window.location.href='/users/profile/<%= gig.postedBy._id %>'">
+
+              <div class="poster-name" onclick="window.location.href='/users/profile/<%= gig.postedBy._id %>'">
+                <h6 class="mb-0 fw-semibold"><%= gig.postedBy.username %></h6>
+                <small class="text-muted">Posted a gig</small>
+
+                <!-- Profile Popup -->
+                <div class="profile-popup">
+                  <a href="/users/profile/<%= gig.postedBy._id %>">👤 View Profile</a>
+                </div>
+              </div>
             </div>
+
+            <h5 class="card-title fw-bold"><%= gig.title %></h5>
+            <p class="card-text text-muted"><%= gig.description.substring(0, 120) %>...</p>
+
+            <p class="gig-price">₹ <%= gig.price %></p>
+
+            <a href="/gigs/<%= gig._id %>" class="btn btn-primary w-100 mt-3">View Details</a>
           </div>
         </div>
       <% }) %>
@@ -23,8 +132,14 @@
   <% } %>
 
   <% if (currentUser) { %>
-    <a href="/gigs/new" class="btn btn-success mt-4">Post a Gig</a>
+    <div class="text-center">
+      <a href="/gigs/new" class="btn btn-success btn-post-gig mt-4">➕ Post a New Gig</a>
+    </div>
   <% } %>
 </div>
+
+<script>
+  console.log("✅ All Gigs page loaded!");
+</script>
 
 <%- include('../partials/footer') %>

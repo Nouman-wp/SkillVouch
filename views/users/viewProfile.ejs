@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= user.username %>'s Profile - SkillVouch</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-header img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #007bff;
+    }
+
+    .profile-header h2 {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .profile-info {
+      margin-top: 30px;
+      padding: 25px;
+      background-color: #f9f9f9;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-info label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .skills-section,
+    .social-section {
+      margin-top: 30px;
+      padding: 25px;
+      background-color: #f9f9f9;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .skills-section ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .skills-section li {
+      background-color: #007bff;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      display: inline-block;
+      margin: 5px;
+      font-size: 1rem;
+    }
+
+    .social-links a {
+      margin-right: 15px;
+      font-size: 1.4rem;
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    .social-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <%- include('../partials/header') %>
+
+  <div class="container mt-5">
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <img src="<%= user.profileImage || '/images/default-profile.png' %>" alt="Profile Image">
+      <div>
+        <h2><%= user.username %></h2>
+        <p>Email: <%= user.email %></p>
+      </div>
+    </div>
+
+    <!-- Bio & Profile Info -->
+    <div class="profile-info mt-4">
+      <h4>Bio</h4>
+      <p><%= user.bio || 'No bio provided.' %></p>
+    </div>
+
+    <!-- Skills -->
+    <div class="skills-section">
+      <h4>Skills</h4>
+      <% if (user.skills && user.skills.length > 0) { %>
+        <ul>
+          <% user.skills.forEach(skill => { %>
+            <li><%= skill %></li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>No skills added.</p>
+      <% } %>
+    </div>
+
+    <!-- Social Links -->
+    <div class="social-section">
+      <h4>Social Links</h4>
+      <div class="social-links">
+        <% if (user.socialLinks.github) { %>
+          <a href="<%= user.socialLinks.github %>" target="_blank">GitHub</a>
+        <% } %>
+        <% if (user.socialLinks.linkedin) { %>
+          <a href="<%= user.socialLinks.linkedin %>" target="_blank">LinkedIn</a>
+        <% } %>
+        <% if (user.socialLinks.twitter) { %>
+          <a href="<%= user.socialLinks.twitter %>" target="_blank">Twitter</a>
+        <% } %>
+        <% if (!user.socialLinks.github && !user.socialLinks.linkedin && !user.socialLinks.twitter) { %>
+          <p>No social links provided.</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <%- include('../partials/footer') %>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
