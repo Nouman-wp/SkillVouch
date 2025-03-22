@@ -4,6 +4,7 @@
   <div class="row">
     <div class="col-lg-8">
       <div class="card shadow-sm border-0">
+
         <div class="card-body">
           <h1 class="card-title fw-bold mb-4"><%= gig.title %></h1>
 
@@ -12,60 +13,77 @@
 
           <p class="fs-5"><strong>Price:</strong> <span class="text-success">₹<%= gig.price %></span></p>
 
+          <p class="fs-5"><strong>Location:</strong> <%= gig.location %></p>
+          <p class="fs-5"><strong>Mode:</strong> <%= gig.mode %></p>
+
+          <p class="fs-5"><strong>Skills Required:</strong> 
+            <% if (gig.skillsRequired.length > 0) { %>
+              <%= gig.skillsRequired.join(', ') %>
+            <% } else { %>
+              <span class="text-muted">No specific skills mentioned.</span>
+            <% } %>
+          </p>
+
+          <% if (gig.deadline) { %>
+            <p class="fs-5"><strong>Deadline:</strong> <%= gig.deadline.toDateString() %></p>
+          <% } %>
+
           <p class="fs-5"><strong>Posted By:</strong> <%= gig.postedBy ? gig.postedBy.username : 'Unknown' %></p>
 
-<% if (currentUser && gig.postedBy && currentUser._id.toString() === gig.postedBy._id.toString()) { %>
-  <div class="mt-4 d-flex gap-3">
-    <a href="/gigs/edit/<%= gig._id %>" class="btn btn-warning">Edit Gig</a>
-    <a href="/gigs/delete/<%= gig._id %>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this gig?');">Delete Gig</a>
-  </div>
-<% } %>
+          <% if (currentUser && gig.postedBy && currentUser._id.toString() === gig.postedBy._id.toString()) { %>
+            <div class="mt-4 d-flex gap-3">
+              <a href="/gigs/edit/<%= gig._id %>" class="btn btn-warning">Edit Gig</a>
+              <a href="/gigs/delete/<%= gig._id %>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this gig?');">Delete Gig</a>
+            </div>
+          <% } %>
 
           <a href="/gigs" class="btn btn-secondary mt-4">← Back to Gigs</a>
         </div>
       </div>
     </div>
 
-    <!-- Apply Section -->
+    <!-- Apply Section (only for non-owners) -->
     <div class="col-lg-4">
       <div class="card shadow-sm border-0">
         <div class="card-body">
-          <h4 class="fw-semibold mb-3">Apply for this Gig</h4>
-          
-          <% if (currentUser) { %>
-            <form action="/gigs/<%= gig._id %>/apply" method="POST" enctype="multipart/form-data">
-              <div class="mb-3">
-                <label class="form-label">Your Message</label>
-                <textarea class="form-control" name="message" rows="4" placeholder="Tell why you're the right fit..." required></textarea>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Upload Resume (PDF Only)</label>
-                <input type="file" class="form-control" name="resume" accept="application/pdf" required>
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Apply Now</button>
-            </form>
-          <% } else { %>
-            <div class="alert alert-warning">
-              Please <a href="/auth/login">login</a> to apply for this gig.
-            </div>
-          <% } %>
           <% if (currentUser && gig.postedBy && currentUser._id.toString() === gig.postedBy._id.toString()) { %>
-            <div class="mt-5">
-              <h3>Applications</h3>
-              <% if (applications.length === 0) { %>
-                <p class="text-muted">No applications yet.</p>
-              <% } else { %>
-                <% applications.forEach(app => { %>
-                  <div class="card shadow-sm mb-3">
-                    <div class="card-body">
-                      <h5>Applicant: <%= app.applicant.username %></h5>
-                      <p><strong>Message:</strong> <%= app.message %></p>
-                      <a href="/<%= app.resume %>" target="_blank" class="btn btn-sm btn-primary">View Resume</a>
-                    </div>
+            <!-- Owner's View: Applications Section -->
+            <h3 class="fw-semibold mb-3">Applications</h3>
+            <% if (applications.length === 0) { %>
+              <p class="text-muted">No applications yet.</p>
+            <% } else { %>
+              <% applications.forEach(app => { %>
+                <div class="card shadow-sm mb-3">
+                  <div class="card-body">
+                    <h5>Applicant: <%= app.applicant.username %></h5>
+                    <p><strong>Message:</strong> <%= app.message %></p>
+                    <a href="/<%= app.resume %>" target="_blank" class="btn btn-sm btn-primary">View Resume</a>
                   </div>
-                <% }) %>
-              <% } %>
-            </div>
+                </div>
+              <% }) %>
+            <% } %>
+
+          <% } else { %>
+            <!-- Non-owner's View: Apply Form -->
+            <h4 class="fw-semibold mb-3">Apply for this Gig</h4>
+
+            <% if (currentUser) { %>
+              <form action="/gigs/<%= gig._id %>/apply" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                  <label class="form-label">Your Message</label>
+                  <textarea class="form-control" name="message" rows="4" placeholder="Tell why you're the right fit..." required></textarea>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Upload Resume (PDF Only)</label>
+                  <input type="file" class="form-control" name="resume" accept="application/pdf" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Apply Now</button>
+              </form>
+            <% } else { %>
+              <div class="alert alert-warning">
+                Please <a href="/auth/login">login</a> to apply for this gig.
+              </div>
+            <% } %>
           <% } %>
         </div>
       </div>

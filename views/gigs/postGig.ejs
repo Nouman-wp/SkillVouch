@@ -1,11 +1,11 @@
 <%- include('../partials/header') %>
 
-<div class="container mt-5">
-  <h1 class="mb-4">Post a New Gig</h1>
+<div class="container mt-5 post-gig-container">
+  <h1 class="mb-4 fw-bold">Post a New Gig</h1>
 
   <form action="/gigs" method="POST">
     <div class="mb-3">
-      <label for="title" class="form-label">Gig Title</label>
+      <label for="title" class="form-label">Role Title</label>
       <input type="text" name="title" class="form-control" required>
     </div>
 
@@ -15,12 +15,87 @@
     </div>
 
     <div class="mb-3">
-      <label for="price" class="form-label">Price (₹)</label>
+      <label for="price" class="form-label">Stipend (₹)</label>
       <input type="number" name="price" class="form-control" required>
     </div>
 
-    <button type="submit" class="btn btn-success">Create Gig</button>
+    <div class="mb-3">
+      <label for="location" class="form-label">Location</label>
+      <input type="text" name="location" class="form-control" placeholder="e.g., Delhi, India or Remote" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="mode" class="form-label">Mode of Work</label>
+      <select name="mode" class="form-select" required>
+        <option value="">Select Mode</option>
+        <option value="On-site">On-site</option>
+        <option value="Remote">Remote</option>
+        <option value="Hybrid">Hybrid</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="skillsRequired" class="form-label">Skills Required (comma separated)</label>
+      <input type="text" name="skillsRequired" class="form-control" placeholder="e.g., JavaScript, React, Node.js">
+    </div>
+
+    <div class="mb-3">
+      <label for="deadline" class="form-label">Application Deadline</label>
+      <input type="date" name="deadline" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label for="image" class="form-label">Gig Image URL (Optional)</label>
+      <input type="text" name="image" class="form-control" placeholder="https://example.com/image.jpg">
+    </div>
+
+    <button type="submit" class="btn btn-success px-4 py-2">Create Gig</button>
   </form>
 </div>
 
 <%- include('../partials/footer') %>
+
+<!-- ✅ Styling -->
+<style>
+  .post-gig-container {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .post-gig-container h1 {
+    color: #333;
+  }
+
+  .form-label {
+    font-weight: 600;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    border: none;
+  }
+
+  .btn-success:hover {
+    background-color: #218838;
+  }
+
+  @media (max-width: 768px) {
+    .post-gig-container {
+      padding: 1rem;
+    }
+  }
+</style>
+
+<!-- ✅ Script for simple validation -->
+<script>
+  const form = document.querySelector('form');
+  form.addEventListener('submit', (e) => {
+    const mode = form.mode.value;
+    if (!mode) {
+      e.preventDefault();
+      alert('Please select a valid Mode of Work!');
+    }
+  });
+</script>
