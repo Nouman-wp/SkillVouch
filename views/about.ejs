@@ -1,106 +1,211 @@
-<%- include('./partials/header') %>
+<%- include('./partials/header') %> 
+<title>About | SkillVouch</title>
 
-
-  <title>About | SkillVouch</title>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f4f9f9;
-      color: #333;
-      line-height: 1.6;
-    }
-
-    .about-container {
-      max-width: 900px;
-      margin: 50px auto;
-      background: #fff;
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-      transition: 0.3s;
-    }
-
-    .about-container:hover {
-      transform: translateY(-5px);
-    }
-
-    h1 {
-      color: #007bff;
-      font-size: 2.8rem;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 20px;
-      text-align: justify;
-    }
-
-    .team {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    .member {
-      background-color: #f8f9fa;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      transition: 0.3s;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .member:hover {
-      background-color: #007bff;
-      color: #fff;
-      transform: translateY(-8px);
-    }
-
-    .member h3 {
-      margin-bottom: 10px;
-    }
-
-    .back-btn {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: #fff;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background-color 0.3s;
-    }
-
-    .back-btn:hover {
-      background-color: #0056b3;
-    }
-  </style>
-
-
-<body>
-
-  <div class="about-container">
-    <h1>About SkillVouch</h1>
-    <p>Welcome to <strong>SkillVouch</strong> — a platform where students, freelancers, and startups connect to
-      showcase their skills, find gigs, and grow together. Our mission is to bridge the gap between raw talent and real-world
-      opportunities, empowering students to monetize their skills while providing startups with the right talent.</p>
-
-    <p>SkillVouch is designed to be intuitive, fast, and effective. Whether you're looking to gain freelance experience, build
-      your portfolio, or find the perfect gig — SkillVouch has got your back!</p>
-
-    <p>Join us on this journey to build a community where talent is valued, growth is limitless, and learning never stops.</p>
-
-    <a href="/" class="back-btn">Back to Home</a>
+<!-- Hero Section --> 
+<section class="about-hero py-5 position-relative overflow-hidden">
+  <div class="position-absolute top-0 end-0 d-none d-lg-block">
+    <svg width="450" height="450" viewBox="0 0 450 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="225" cy="225" r="225" fill="rgba(13, 110, 253, 0.05)"/>
+      <circle cx="225" cy="225" r="175" fill="rgba(13, 110, 253, 0.08)"/>
+      <circle cx="225" cy="225" r="125" fill="rgba(13, 110, 253, 0.12)"/>
+    </svg>
   </div>
+  <div class="container position-relative">
+    <div class="row align-items-center">
+      <div class="col-lg-8 mx-auto">
+        <div class="about-hero-content text-center">
+          <span class="badge bg-primary text-white px-3 py-2 mb-4 rounded-pill fw-normal">Our Story</span>
+          <h1 class="display-3 fw-bold mb-4">About <span class="text-primary position-relative">SkillVouch<span class="position-absolute start-0 bottom-0 w-100 bg-warning" style="height:6px; opacity:0.4; z-index:-1;"></span></span></h1>
+          <p class="lead mb-5 mx-auto" style="max-width: 700px;">Empowering professionals and organizations through a trusted platform that values authenticity, expertise, and meaningful connections.</p>
+          <div class="d-flex align-items-center justify-content-center flex-wrap gap-4 mt-5">
+            <div class="text-center px-4">
+              <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 80px; height: 80px;">
+                <i class="fas fa-hands-helping text-primary fa-2x"></i>
+              </div>
+              <h3 class="fw-bold text-primary mb-1">Help</h3>
+              <p class="mb-0">Professionals</p>
+            </div>
+            <div class="text-center px-4">
+              <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 80px; height: 80px;">
+                <i class="fas fa-award text-primary fa-2x"></i>
+              </div>
+              <h3 class="fw-bold text-primary mb-1">Grant</h3>
+              <p class="mb-0">Placements</p>
+            </div>
+            <div class="text-center px-4">
+              <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 80px; height: 80px;">
+                <i class="fas fa-bullhorn text-primary fa-2x"></i>
+              </div>
+              <h3 class="fw-bold text-primary mb-1">Promote</h3>
+              <p class="mb-0">Partners</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="position-absolute bottom-0 start-0 w-100">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" fill="#f8f9fa"><path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,100L1360,100C1280,100,1120,100,960,100C800,100,640,100,480,100C320,100,160,100,80,100L0,100Z"></path></svg>
+  </div>
+</section>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      console.log("About page loaded!");
-    });
-  </script>
+<!-- Our Mission & Vision Section -->
+<section class="bg-light py-5 position-relative">
+  <div class="container py-4">
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <div class="mission-vision-card bg-white p-0 rounded-lg shadow-sm overflow-hidden">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <div class="p-5 h-100 border-end border-light">
+                <div class="d-inline-block text-primary p-3 bg-primary bg-opacity-10 rounded-circle mb-4">
+                  <i class="fas fa-bullseye fa-2x"></i>
+                </div>
+                <h3 class="fw-bold mb-4 position-relative d-inline-block">
+                  Our Mission
+                  <span class="position-absolute start-0 bottom-0 w-100 bg-primary" style="height:3px; opacity:0.5;"></span>
+                </h3>
+                <p class="mb-0 lead">To create a transparent ecosystem where professional talent and opportunities connect based on verified skills and authentic relationships, not just resumes and keywords.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="p-5 h-100 position-relative" style="background: linear-gradient(to right, #ffffff, #f8f9fa);">
+                <div class="d-inline-block text-primary p-3 bg-primary bg-opacity-10 rounded-circle mb-4">
+                  <i class="fas fa-binoculars fa-2x"></i>
+                </div>
+                <h3 class="fw-bold mb-4 position-relative d-inline-block">
+                  Our Vision
+                  <span class="position-absolute start-0 bottom-0 w-100 bg-primary" style="height:3px; opacity:0.5;"></span>
+                </h3>
+                <p class="mb-0 lead">A world where every professional can showcase their true capabilities and every organization can find exactly the talent they need, creating fulfilling careers and thriving businesses.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-</body>
+<!-- Our Values Section -->
+<section class="py-5 position-relative">
+  <div class="position-absolute top-50 start-0 translate-middle-y d-none d-xl-block">
+    <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 100C0 44.7715 44.7715 0 100 0C155.228 0 200 44.7715 200 100C200 155.228 155.228 200 100 200C44.7715 200 0 155.228 0 100Z" fill="rgba(13, 110, 253, 0.05)"/>
+    </svg>
+  </div>
+  <div class="container position-relative py-4">
+    <div class="row text-center mb-5">
+      <div class="col-lg-8 mx-auto">
+        <span class="badge bg-primary text-white px-3 py-2 mb-3 rounded-pill fw-normal d-inline-block">Our Principles</span>
+        <h2 class="display-5 fw-bold mb-4">The Values That Drive Us</h2>
+        <p class="lead">Every feature we build and every connection we facilitate is guided by these core principles.</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm rounded-lg position-relative transform-on-hover">
+          <div class="position-absolute top-0 start-0 w-100 h-100 rounded-lg" style="background: linear-gradient(45deg, rgba(13,110,253,0.03) 0%, rgba(13,110,253,0) 100%);"></div>
+          <div class="card-body p-5 position-relative">
+            <div class="d-inline-block text-white p-3 bg-primary rounded-circle mb-4">
+              <i class="fas fa-handshake fa-lg"></i>
+            </div>
+            <h3 class="card-title h4 fw-bold mb-3">Trust & Transparency</h3>
+            <p class="card-text mb-0">We believe in creating an ecosystem where professionals can showcase their authentic skills and organizations can find talent they can trust. Every verification on our platform is thorough and meaningful.</p>
+          </div>
+          <div class="card-footer bg-transparent border-0 p-4">
+            <div class="small text-primary fw-bold">
+              <i class="fas fa-arrow-right me-2"></i>Learn more
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm rounded-lg position-relative transform-on-hover">
+          <div class="position-absolute top-0 start-0 w-100 h-100 rounded-lg" style="background: linear-gradient(45deg, rgba(13,110,253,0.03) 0%, rgba(13,110,253,0) 100%);"></div>
+          <div class="card-body p-5 position-relative">
+            <div class="d-inline-block text-white p-3 bg-primary rounded-circle mb-4">
+              <i class="fas fa-users fa-lg"></i>
+            </div>
+            <h3 class="card-title h4 fw-bold mb-3">Community-Powered</h3>
+            <p class="card-text mb-0">We harness the power of professional networks and peer validation. Our platform enables colleagues, managers, and clients to vouch for the skills they've witnessed firsthand, creating a rich tapestry of verified expertise.</p>
+          </div>
+          <div class="card-footer bg-transparent border-0 p-4">
+            <div class="small text-primary fw-bold">
+              <i class="fas fa-arrow-right me-2"></i>Learn more
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm rounded-lg position-relative transform-on-hover">
+          <div class="position-absolute top-0 start-0 w-100 h-100 rounded-lg" style="background: linear-gradient(45deg, rgba(13,110,253,0.03) 0%, rgba(13,110,253,0) 100%);"></div>
+          <div class="card-body p-5 position-relative">
+            <div class="d-inline-block text-white p-3 bg-primary rounded-circle mb-4">
+              <i class="fas fa-rocket fa-lg"></i>
+            </div>
+            <h3 class="card-title h4 fw-bold mb-3">Continuous Innovation</h3>
+            <p class="card-text mb-0">The world of work is constantly evolving, and so are we. We're committed to developing new tools and approaches that make professional connections more meaningful, efficient, and equitable.</p>
+          </div>
+          <div class="card-footer bg-transparent border-0 p-4">
+            <div class="small text-primary fw-bold">
+              <i class="fas fa-arrow-right me-2"></i>Learn more
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 position-relative overflow-hidden">
+  <div class="bg-primary position-absolute top-0 start-0 w-100 h-100" style="transform: skewY(-3deg); transform-origin: top right;"></div>
+  <div class="container position-relative py-5">
+    <div class="row align-items-center">
+      <div class="col-lg-8 mx-auto text-center text-white">
+        <h2 class="display-5 fw-bold mb-4">Ready to Experience the SkillVouch Difference?</h2>
+        <p class="lead mb-5 opacity-90">Join thousands of professionals and organizations who've discovered a better way to connect talent with opportunity.</p>
+        <div class="d-flex flex-wrap justify-content-center gap-4">
+          <a href="/register" class="btn btn-light btn-lg fw-bold px-5 py-3 rounded-pill shadow-sm">
+            <i class="fas fa-user-plus me-2"></i>Create Your Profile
+          </a>
+          <a href="/employers" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill">
+            <i class="fas fa-building me-2"></i>For Employers
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="position-absolute bottom-0 end-0">
+    <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="200" r="200" fill="rgba(255, 255, 255, 0.05)"/>
+    </svg>
+  </div>
+</section>
+
+<!-- Custom Styles -->
+<style>
+  .transform-on-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .transform-on-hover:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+  }
+
+  .about-hero {
+    padding-top: 100px;
+    padding-bottom: 120px;
+  }
+
+  @media (max-width: 768px) {
+    .about-hero {
+      padding-top: 60px;
+      padding-bottom: 100px;
+    }
+  }
+</style>
+
 <%- include('./partials/footer') %>

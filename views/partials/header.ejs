@@ -6,148 +6,380 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SkillVouch</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/css/style.css">
   <style>
-    .account-dropdown {
+    :root {
+      --primary-color: #4361ee;
+      --primary-hover: #3a56d4;
+      --secondary-color: #f72585;
+      --light-bg: #f8f9fa;
+      --dark-text: #333;
+      --light-text: #f8f9fa;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    .navbar {
+      background: linear-gradient(135deg, var(--primary-color), #3a0ca3);
+      padding: 15px 0;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Logo redesign */
+    .navbar-brand {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: #fff;
+      border-radius: 8px;
+      margin-right: 10px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-icon::before {
+      content: "S";
+      color: var(--primary-color);
+      font-weight: 800;
+      font-size: 22px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-icon::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.2));
+      z-index: 1;
+    }
+
+    .logo-text {
+      display: inline-block;
+    }
+
+    .navbar-brand .vouch {
+      font-weight: 300;
+      opacity: 0.95;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      padding: 10px 16px !important;
+      margin: 0 2px;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: #fff;
+      transition: var(--transition);
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 70%;
+    }
+
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .user-account {
       position: relative;
       cursor: pointer;
     }
 
-    .account-dropdown .dropdown-content {
-      display: none;
+    .account-btn {
+      display: flex;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.15);
+      border-radius: 50px;
+      padding: 8px 16px;
+      color: #fff;
+      transition: var(--transition);
+      border: none;
+    }
+
+    .account-btn:hover {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .profile-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      margin-right: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .user-menu {
       position: absolute;
-      background-color: #ffffff;
-      min-width: 200px;
+      top: 120%;
       right: 0;
-      top: 50px;
-      z-index: 999;
-      border-radius: 8px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      width: 240px;
+      background-color: #fff;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: var(--transition);
+      z-index: 1000;
       overflow: hidden;
     }
 
-    .account-dropdown .dropdown-content li {
-      list-style: none;
-      border-bottom: 1px solid #ddd;
+    .user-account.active .user-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
     }
 
-    .account-dropdown .dropdown-content li a {
-      color: #333;
-      text-decoration: none;
-      display: block;
-      padding: 10px 15px;
-      transition: 0.3s;
-    }
-
-    .account-dropdown .dropdown-content li a:hover {
-      background-color: #f39c12;
+    .user-menu-header {
+      background-color: var(--primary-color);
       color: #fff;
+      padding: 15px;
+      text-align: center;
     }
 
-    .account-dropdown.active .dropdown-content {
-      display: block;
+    .user-menu-items {
+      padding: 0;
+      margin: 0;
+      list-style: none;
     }
 
-    .profile-img {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: 8px;
-      vertical-align: middle;
+    .user-menu-item {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
 
-    .account-toggle {
+    .user-menu-link {
       display: flex;
       align-items: center;
-      color: #fff;
-      cursor: pointer;
-      padding: 8px;
-      border-radius: 5px;
+      padding: 12px 20px;
+      color: var(--dark-text);
+      text-decoration: none;
+      transition: var(--transition);
     }
 
-    .account-toggle:hover {
-      background-color: rgba(255, 255, 255, 0.2);
+    .user-menu-link:hover {
+      background-color: rgba(67, 97, 238, 0.1);
+      color: var(--primary-color);
+    }
+
+    .user-menu-link i {
+      margin-right: 12px;
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+      color: var(--primary-color);
+    }
+
+    .notification-badge {
+      position: relative;
+    }
+
+    .notification-badge::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 8px;
+      height: 8px;
+      background-color: var(--secondary-color);
+      border-radius: 50%;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 992px) {
+      .navbar-collapse {
+        background-color: var(--primary-color);
+        margin: 0 -12px;
+        padding: 15px;
+        border-radius: 0 0 var(--border-radius) var(--border-radius);
+      }
+      
+      .nav-link {
+        border-radius: var(--border-radius);
+        margin: 5px 0;
+      }
+      
+      .account-btn {
+        margin-top: 10px;
+        justify-content: flex-start;
+        width: 100%;
+        border-radius: var(--border-radius);
+      }
+      
+      .user-menu {
+        position: static;
+        width: 100%;
+        margin-top: 10px;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        display: none;
+      }
+      
+      .user-account.active .user-menu {
+        display: block;
+      }
     }
   </style>
 </head>
 
 <body>
-
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="/">💼SkillVouch</a>
+      <a class="navbar-brand" href="/">
+        <div class="logo-icon"></div>
+        <div class="logo-text">Skill<span class="vouch">Vouch</span></div>
+      </a>
+      
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="/gigs">Explore Gigs</a></li>
-
-          <li class="nav-item account-dropdown">
-            <div class="account-toggle">
-              <img src="<%= currentUser && currentUser.profileImage ? currentUser.profileImage : '/images/default.png' %>" alt="Profile" class="profile-img">
-              
-              <!-- ✅ Username if logged in, otherwise "Account" -->
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item">
+            <a class="nav-link" href="/about">
+              <i class="fas fa-info-circle me-1"></i> About
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/gigs">
+              <i class="fas fa-briefcase me-1"></i> Explore Gigs
+            </a>
+          </li>
+          
+          <li class="nav-item user-account ms-lg-3">
+            <button class="account-btn">
+              <img src="<%= currentUser && currentUser.profileImage ? currentUser.profileImage : '/images/default.png' %>" 
+                   alt="Profile" class="profile-avatar">
               <span><%= currentUser ? currentUser.username : 'Account' %></span>
-            </div>
-
-            <ul class="dropdown-content">
+              <i class="fas fa-chevron-down ms-2 small"></i>
+            </button>
+            
+            <div class="user-menu">
               <% if (!currentUser) { %>
-                <li><a href="/auth/register">Register</a></li>
-                <li><a href="/auth/login">Login</a></li>
+                <div class="user-menu-header">
+                  <h6 class="mb-0">Welcome to SkillVouch</h6>
+                </div>
+                <ul class="user-menu-items">
+                  <li class="user-menu-item">
+                    <a href="/auth/register" class="user-menu-link">
+                      <i class="fas fa-user-plus"></i> Register
+                    </a>
+                  </li>
+                  <li class="user-menu-item">
+                    <a href="/auth/login" class="user-menu-link">
+                      <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                  </li>
+                </ul>
               <% } else { %>
-                <li><a href="/users/profile">Profile</a></li>
-              
-                <!-- Role-Based Dashboard Link -->
-                <li>
-                  <% if (currentUser.role === 'Applicant') { %>
-                    <a href="/dashboard">Dashboard</a>
-                  <% } else if (currentUser.role === 'Organization') { %>
-                    <a href="/org/dashboard">Dashboard</a>
-                  <% } else if (currentUser.role === 'Recruiter') { %>
-                    <a href="/rec/dashboard">Dashboard</a>
-                  <% } else { %>
-                    <a href="/dashboard">Dashboard</a>
-                  <% } %>
-                </li>
-              
-                <li><a href="/applied">Applied Gigs</a></li>
-                <li><a href="/auth/logout">Logout</a></li>
+                <div class="user-menu-header">
+                  <h6 class="mb-0">Hello, <%= currentUser.username %></h6>
+                  <small><%= currentUser.role %></small>
+                </div>
+                <ul class="user-menu-items">
+                  <li class="user-menu-item">
+                    <a href="/users/profile" class="user-menu-link">
+                      <i class="fas fa-user-circle"></i> Profile
+                    </a>
+                  </li>
+                  <li class="user-menu-item">
+                    <a href="<%= 
+                      currentUser.role === 'Applicant' ? '/dashboard' : 
+                      currentUser.role === 'Organization' ? '/org/dashboard' : 
+                      currentUser.role === 'Recruiter' ? '/rec/dashboard' : 
+                      '/dashboard' 
+                    %>" class="user-menu-link">
+                      <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                  </li>
+                  <li class="user-menu-item">
+                    <a href="/applied" class="user-menu-link notification-badge">
+                      <i class="fas fa-clipboard-list"></i> Applied Gigs
+                    </a>
+                  </li>
+                  <li class="user-menu-item">
+                    <a href="/auth/logout" class="user-menu-link">
+                      <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                  </li>
+                </ul>
               <% } %>
-              
-            </ul>
+            </div>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <div class="container">
+  <div class="container mt-3">
     <%- include('flash') %>
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const dropdown = document.querySelector('.account-dropdown');
-      const toggleBtn = dropdown.querySelector('.account-toggle');
-
-      toggleBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent immediate close
-        dropdown.classList.toggle('active');
-      });
-
-      // Close dropdown on clicking outside
+      // User account dropdown toggle
+      const userAccount = document.querySelector('.user-account');
+      const accountBtn = document.querySelector('.account-btn');
+      
+      if (accountBtn) {
+        accountBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          userAccount.classList.toggle('active');
+        });
+      }
+      
+      // Close dropdown when clicking outside
       document.addEventListener('click', (e) => {
-        if (!dropdown.contains(e.target)) {
-          dropdown.classList.remove('active');
+        if (userAccount && !userAccount.contains(e.target)) {
+          userAccount.classList.remove('active');
+        }
+      });
+      
+      // Add active class to current nav item
+      const currentPath = window.location.pathname;
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPath || 
+            (href !== '/' && currentPath.startsWith(href)) ||
+            (href === '/' && currentPath === '/')) {
+          link.classList.add('active');
         }
       });
     });
   </script>
-
 </body>
-
-</html>

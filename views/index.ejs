@@ -1,40 +1,794 @@
 <%- include('partials/header') %>
-<%- include('partials/flash') %>
 
-<section class="hero bg-light text-center py-5">
-  <div class="container">
-    <h1 class="display-4 fw-bold">Welcome to SkillVouch</h1>
-    <p class="lead mt-3">Find paid gigs, showcase your skills, and connect with startups and peers.</p>
-    <% if (!currentUser) { %>
-      <a href="/auth/register" class="btn btn-success mt-4 px-4 py-2">Get Started</a>
-      <a href="/auth/login" class="btn btn-outline-dark mt-4 px-4 py-2">Login</a>
-    <% } else { %>
-      <a href="/gigs" class="btn btn-primary mt-4 px-4 py-2">Explore Gigs</a>
-    <% } %>
+<!-- Hero Section with Animated Elements -->
+<section class="hero">
+  <div class="hero-content container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 hero-text">
+        <h1 class="hero-title">Find Your Next <span class="highlight">Opportunity</span></h1>
+        <p class="hero-subtitle">Connect with startups, showcase your talents, and earn with gigs that match your skills.</p>
+        <div class="hero-cta">
+          <% if (!currentUser) { %>
+            <a href="/auth/register" class="btn btn-primary btn-lg">Get Started</a>
+            <a href="/auth/login" class="btn btn-outline-light btn-lg">Sign In</a>
+          <% } else { %>
+            <a href="/gigs" class="btn btn-primary btn-lg">Explore Gigs</a>
+            <a href="/dashboard" class="btn btn-outline-light btn-lg">My Dashboard</a>
+          <% } %>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">500+</span>
+            <span class="stat-label">Active Gigs</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">2.5K+</span>
+            <span class="stat-label">Skilled Professionals</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">98%</span>
+            <span class="stat-label">Satisfaction Rate</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 d-none d-lg-block">
+        <div class="hero-image">
+          <img src="/images/hero-illustration.svg" alt="SkillVouch Platform" onerror="this.src='/api/placeholder/600/400'; this.onerror=null;">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="shape-divider">
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+    </svg>
   </div>
 </section>
 
-<section class="features py-5 bg-white text-center">
+<!-- Features Section -->
+<section class="features">
   <div class="container">
-    <h2 class="mb-4">Why SkillVouch?</h2>
-    <div class="row">
+    <div class="section-header text-center">
+      <span class="section-tag">Why Choose Us</span>
+      <h2 class="section-title">Elevate Your Career With SkillVouch</h2>
+      <p class="section-subtitle">Join thousands of professionals who are already growing their careers with our platform</p>
+    </div>
+    
+    <div class="row feature-cards">
       <div class="col-md-4">
-        <i class="bi bi-briefcase-fill fs-1 text-primary"></i>
-        <h5 class="mt-3">Find Freelance Gigs</h5>
-        <p>Get paid for your skills. Connect with startups or peers seeking talent.</p>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <h3>Find Meaningful Gigs</h3>
+          <p>Access hundreds of quality gigs that match your skills and interests. Get paid for work you enjoy.</p>
+        </div>
       </div>
+      
       <div class="col-md-4">
-        <i class="bi bi-person-check-fill fs-1 text-success"></i>
-        <h5 class="mt-3">Verified Profiles</h5>
-        <p>Showcase your projects, GitHub, LinkedIn, and earn trust in the community.</p>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <h3>Verified Profiles</h3>
+          <p>Build trust with verified profiles. Showcase your GitHub, LinkedIn, and portfolio to stand out.</p>
+        </div>
       </div>
+      
       <div class="col-md-4">
-        <i class="bi bi-chat-dots-fill fs-1 text-warning"></i>
-        <h5 class="mt-3">Collaborate & Grow</h5>
-        <p>Build your network, learn, and grow together while earning side income.</p>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3>Community Growth</h3>
+          <p>Connect with peers, learn from mentors, and grow your professional network while earning.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- How It Works Section -->
+<section class="how-it-works">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-tag">Simple Process</span>
+      <h2 class="section-title">How SkillVouch Works</h2>
+      <p class="section-subtitle">Get started in minutes and find your perfect opportunity</p>
+    </div>
+    
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Create Your Profile</h3>
+          <p>Sign up and showcase your skills, experience, and portfolio to stand out.</p>
+        </div>
+      </div>
+      
+      <div class="process-connector"></div>
+      
+      <div class="process-step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Discover Opportunities</h3>
+          <p>Browse through relevant gigs that match your expertise and interests.</p>
+        </div>
+      </div>
+      
+      <div class="process-connector"></div>
+      
+      <div class="process-step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Apply & Connect</h3>
+          <p>Submit your application and connect directly with companies and recruiters.</p>
+        </div>
+      </div>
+      
+      <div class="process-connector"></div>
+      
+      <div class="process-step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>Get Hired & Earn</h3>
+          <p>Start working on exciting projects and build your professional reputation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="section-tag">Success Stories</span>
+      <h2 class="section-title">What Our Users Say</h2>
+      <p class="section-subtitle">Join thousands of satisfied users who found their career path through SkillVouch</p>
+    </div>
+    
+    <div class="testimonial-carousel">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <div class="testimonial-avatar">
+              <img src="https://media.istockphoto.com/id/1212710606/photo/young-handsome-man-with-beard-wearing-casual-t-shirt-standing-over-white-background-looking.jpg?s=612x612&w=0&k=20&c=TqO46wTlF5ZA3lFpIfNq2br-ruuKpdZXSegCkHNoqMo=" alt="Sarah J." class="rounded-circle">
+            </div>
+            <div class="testimonial-content">
+              <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <p>"SkillVouch helped me land my first freelance project as a UI designer. The platform is intuitive and connecting with clients was seamless!"</p>
+              <div class="testimonial-author">
+                <h4>Sarah J.</h4>
+                <p>UI/UX Designer</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <div class="testimonial-avatar">
+              <img src="data:image/jpeg;base64,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" alt="Mark T." class="rounded-circle">
+            </div>
+            <div class="testimonial-content">
+              <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <p>"As a startup founder, SkillVouch has been invaluable in finding talented developers for short-term projects. The quality of candidates is exceptional."</p>
+              <div class="testimonial-author">
+                <h4>Mark T.</h4>
+                <p>Startup Founder</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="testimonial-card">
+            <div class="testimonial-avatar">
+              <img src="data:image/jpeg;base64,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" alt="Priya M." class="rounded-circle">
+            </div>
+            <div class="testimonial-content">
+              <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <p>"I've been able to build my portfolio and earn while studying thanks to SkillVouch. The verification system makes it easy to establish credibility."</p>
+              <div class="testimonial-author">
+                <h4>Priya M.</h4>
+                <p>Full-Stack Developer</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2>Ready to Start Your Journey?</h2>
+      <p>Join SkillVouch today and unlock a world of opportunities that match your skills and aspirations.</p>
+      <% if (!currentUser) { %>
+        <a href="/auth/register" class="btn btn-light btn-lg">Create Your Account</a>
+      <% } else { %>
+        <a href="/gigs" class="btn btn-light btn-lg">Explore Available Gigs</a>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* General Styles */
+  :root {
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --secondary: #f72585;
+    --dark: #2b2d42;
+    --light: #f8f9fa;
+    --gray: #8d99ae;
+    --success: #2a9d8f;
+    --warning: #e9c46a;
+    --info: #48cae4;
+    --gradient-primary: linear-gradient(135deg, #4361ee, #3a0ca3);
+    --border-radius: 10px;
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+  }
+
+  section {
+    padding: 80px 0;
+    overflow: hidden;
+  }
+
+  .section-header {
+    margin-bottom: 60px;
+  }
+
+  .section-tag {
+    display: inline-block;
+    padding: 5px 15px;
+    background-color: rgba(67, 97, 238, 0.1);
+    color: var(--primary);
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 20px;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: var(--gray);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* Hero Section */
+  .hero {
+    position: relative;
+    background: var(--gradient-primary);
+    color: white;
+    padding: 120px 0 160px;
+    overflow: hidden;
+    margin-top: -16px;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.1;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .hero-title .highlight {
+    color: var(--warning);
+    position: relative;
+  }
+
+  .hero-title .highlight::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 8px;
+    bottom: 5px;
+    left: 0;
+    background-color: rgba(233, 196, 106, 0.3);
+    z-index: -1;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    max-width: 500px;
+  }
+
+  .hero-cta {
+    margin-bottom: 40px;
+  }
+
+  .hero-cta .btn {
+    margin-right: 15px;
+    margin-bottom: 15px;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--warning);
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  .hero-image {
+    position: relative;
+    z-index: 5;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .hero-image img {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.2));
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .shape-divider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .shape-divider svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 60px;
+  }
+
+  .shape-divider .shape-fill {
+    fill: var(--light);
+  }
+
+  /* Features Section */
+  .features {
+    background-color: var(--light);
+  }
+
+  .feature-cards {
+    margin-top: 40px;
+  }
+
+  .feature-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 30px;
+    height: 100%;
+    text-align: center;
+    transition: var(--transition);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: var(--gradient-primary);
+    transition: var(--transition);
+    z-index: -1;
+    opacity: 0;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-10px);
+  }
+
+  .feature-card:hover::before {
+    height: 100%;
+    opacity: 1;
+  }
+
+  .feature-card:hover h3,
+  .feature-card:hover p {
+    color: white;
+  }
+
+  .feature-card:hover .feature-icon {
+    background-color: white;
+    color: var(--primary);
+  }
+
+  .feature-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: rgba(67, 97, 238, 0.1);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.5rem;
+    transition: var(--transition);
+  }
+
+  .feature-card h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--dark);
+    transition: var(--transition);
+  }
+
+  .feature-card p {
+    font-size: 1rem;
+    color: var(--gray);
+    margin-bottom: 0;
+    transition: var(--transition);
+  }
+
+  /* How It Works */
+  .how-it-works {
+    background-color: white;
+  }
+
+  .process-steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 60px;
+  }
+
+  .process-step {
+    flex: 0 0 calc(25% - 30px);
+    max-width: calc(25% - 30px);
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .step-number {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    position: relative;
+    box-shadow: 0 10px 20px rgba(58, 6, 163, 0.2);
+  }
+
+  .step-content h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--dark);
+  }
+
+  .step-content p {
+    font-size: 0.95rem;
+    color: var(--gray);
+  }
+
+  .process-connector {
+    position: relative;
+    height: 2px;
+    background-color: #e0e0e0;
+    flex: 0 0 20px;
+    max-width: 20px;
+    margin-top: 30px;
+  }
+
+  @media (max-width: 991.98px) {
+    .process-steps {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .process-step {
+      flex: 0 0 100%;
+      max-width: 100%;
+      margin-bottom: 40px;
+    }
+    
+    .process-connector {
+      flex: 0 0 2px;
+      max-width: 2px;
+      height: 40px;
+      margin: 0;
+    }
+  }
+
+  /* Testimonials */
+  .testimonials {
+    background-color: #f5f7ff;
+    position: relative;
+  }
+
+  .testimonial-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 30px;
+    height: 100%;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .testimonial-card:hover {
+    transform: translateY(-10px);
+  }
+
+  .testimonial-avatar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+
+  .testimonial-avatar img {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--primary);
+  }
+
+  .testimonial-content {
+    padding-left: 45px;
+    padding-top: 30px;
+  }
+
+  .testimonial-rating {
+    margin-bottom: 15px;
+    color: #ffc107;
+  }
+
+  .testimonial-content p {
+    font-style: italic;
+    color: var(--dark);
+    font-size: 1rem;
+  }
+
+  .testimonial-author h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0;
+    color: var(--dark);
+  }
+
+  .testimonial-author p {
+    font-size: 0.9rem;
+    color: var(--gray);
+    font-style: normal;
+    margin: 0;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    background: var(--gradient-primary);
+    color: white;
+    text-align: center;
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    top: -150px;
+    right: -150px;
+    border-radius: 50%;
+  }
+
+  .cta-section::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    bottom: -100px;
+    left: -100px;
+    border-radius: 50%;
+  }
+
+  .cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .cta-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+  }
+
+  .cta-content .btn {
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    background-color: white;
+    color: var(--primary);
+  }
+
+  .cta-content .btn:hover {
+    background-color: var(--dark);
+    color: white;
+    transform: translateY(-3px);
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 991.98px) {
+    .hero {
+      padding: 100px 0 140px;
+    }
+    
+    .hero-title {
+      font-size: 2.8rem;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+    }
+    
+    .process-steps {
+      margin-top: 30px;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    section {
+      padding: 60px 0;
+    }
+    
+    .hero {
+      padding: 80px 0 120px;
+    }
+    
+    .hero-title {
+      font-size: 2.2rem;
+    }
+    
+    .hero-stats {
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    
+    .section-header {
+      margin-bottom: 40px;
+    }
+    
+    .section-title {
+      font-size: 1.8rem;
+    }
+    
+    .cta-content h2 {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add animation classes to elements
+    const animateOnScroll = function() {
+      const elements = document.querySelectorAll('.feature-card, .process-step, .testimonial-card');
+      
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.2;
+        
+        if (elementPosition < screenPosition) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    };
+    
+    // Initial styles
+    const cards = document.querySelectorAll('.feature-card, .process-step, .testimonial-card');
+    cards.forEach((card, index) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      card.style.transitionDelay = (index * 0.1) + 's';
+    });
+    
+    // Run on load
+    setTimeout(animateOnScroll, 100);
+    
+    // Run on scroll
+    window.addEventListener('scroll', animateOnScroll);
+  });
+</script>
 
 <%- include('partials/footer') %>

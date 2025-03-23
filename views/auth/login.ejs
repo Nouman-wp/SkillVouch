@@ -1,95 +1,272 @@
 <%- include('../partials/header') %>
 
+<main class="login-page">
+  <div class="page-container">
+    <div class="login-container">
+      <div class="logo">
+        <div class="logo-circle">SV</div>
+      </div>
+      
+      <h2>Login to SkillVouch</h2>
+      
+      <form action="/auth/login" method="POST">
+        <div class="input-group">
+          <div class="input-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <input type="text" name="username" placeholder="Enter your username" required>
+        </div>
+        
+        <div class="input-group">
+          <div class="input-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <input type="password" name="password" placeholder="Enter your password" required>
+        </div>
+        
+        <div class="options-row">
+          <label class="remember-me">
+            <input type="checkbox" name="remember">
+            <span>Remember me</span>
+          </label>
+          <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+        
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+      
+      <div class="divider">
+        <span>OR</span>
+      </div>
+      
+      <div class="social-login">
+        <button type="button" class="google-btn">
+          <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+            <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
+              <path fill="#4285F4" d="M -3.264 51.509 C -3.264 50.719 -3.334 49.969 -3.454 49.239 L -14.754 49.239 L -14.754 53.749 L -8.284 53.749 C -8.574 55.229 -9.424 56.479 -10.684 57.329 L -10.684 60.329 L -6.824 60.329 C -4.564 58.239 -3.264 55.159 -3.264 51.509 Z" />
+              <path fill="#34A853" d="M -14.754 63.239 C -11.514 63.239 -8.804 62.159 -6.824 60.329 L -10.684 57.329 C -11.764 58.049 -13.134 58.489 -14.754 58.489 C -17.884 58.489 -20.534 56.379 -21.484 53.529 L -25.464 53.529 L -25.464 56.619 C -23.494 60.539 -19.444 63.239 -14.754 63.239 Z" />
+              <path fill="#FBBC05" d="M -21.484 53.529 C -21.734 52.809 -21.864 52.039 -21.864 51.239 C -21.864 50.439 -21.724 49.669 -21.484 48.949 L -21.484 45.859 L -25.464 45.859 C -26.284 47.479 -26.754 49.299 -26.754 51.239 C -26.754 53.179 -26.284 54.999 -25.464 56.619 L -21.484 53.529 Z" />
+              <path fill="#EA4335" d="M -14.754 43.989 C -12.984 43.989 -11.404 44.599 -10.154 45.789 L -6.734 42.369 C -8.804 40.429 -11.514 39.239 -14.754 39.239 C -19.444 39.239 -23.494 41.939 -25.464 45.859 L -21.484 48.949 C -20.534 46.099 -17.884 43.989 -14.754 43.989 Z" />
+            </g>
+          </svg>
+          <span>Sign in with Google</span>
+        </button>
+      </div>
+      
+      <div class="register-link">
+        Don't have an account? <a href="/auth/register">Register here</a>
+      </div>
+    </div>
+  </div>
+</main>
+
 <style>
-    body {
-        background-color: #f4f9f9;
-        font-family: 'Poppins', sans-serif;
-    }
-
+  body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-page {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .page-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  .login-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .logo-circle {
+    width: 70px;
+    height: 70px;
+    background-color: #0073e6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: 600;
+  }
+  
+  .input-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 1px solid #e1e5eb;
+    border-radius: 4px;
+    font-size: 15px;
+    box-sizing: border-box;
+    background-color: #f9fafc;
+    transition: border-color 0.3s;
+  }
+  
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    outline: none;
+    border-color: #0073e6;
+    box-shadow: 0 0 0 2px rgba(0, 115, 230, 0.2);
+    background-color: white;
+  }
+  
+  .options-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  
+  .remember-me {
+    display: flex;
+    align-items: center;
+    color: #666;
+  }
+  
+  .remember-me input {
+    margin-right: 8px;
+  }
+  
+  .forgot-password {
+    color: #0073e6;
+    text-decoration: none;
+  }
+  
+  .login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .login-btn:hover {
+    background-color: #0062c4;
+  }
+  
+  .divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+  }
+  
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #e1e5eb;
+  }
+  
+  .divider span {
+    padding: 0 15px;
+    color: #888;
+    font-size: 14px;
+  }
+  
+  .google-btn {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: white;
+    border: 1px solid #e1e5eb;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .google-btn:hover {
+    background-color: #f5f7fa;
+  }
+  
+  .google-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .register-link {
+    margin-top: 25px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .register-link a {
+    color: #0073e6;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  @media (max-width: 480px) {
     .login-container {
-        max-width: 400px;
-        margin: 80px auto;
-        background-color: #fff;
-        padding: 40px;
-        border-radius: 15px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        transition: 0.3s;
+      padding: 30px 20px;
     }
-
-    .login-container:hover {
-        transform: translateY(-5px);
-    }
-
-    .login-container h2 {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #007bff;
-        font-size: 2rem;
-    }
-
-    .login-container input {
-        width: 100%;
-        padding: 15px;
-        margin: 15px 0;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        transition: border-color 0.3s;
-    }
-
-    .login-container input:focus {
-        outline: none;
-        border-color: #007bff;
-    }
-
-    .login-container button {
-        width: 100%;
-        padding: 15px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 8px;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    .login-container button:hover {
-        background-color: #0056b3;
-    }
-
-    .login-container .register-link {
-        display: block;
-        text-align: center;
-        margin-top: 20px;
-        color: #333;
-    }
-
-    .login-container .register-link a {
-        color: #007bff;
-        text-decoration: none;
-        font-weight: 500;
-    }
-
-    .login-container .register-link a:hover {
-        text-decoration: underline;
-    }
+  }
 </style>
 
-<div class="login-container">
-    <h2>Login to SkillVouch</h2>
-    <form action="/auth/login" method="POST">
-        <input type="text" name="username" placeholder="Enter your username" required>
-        <input type="password" name="password" placeholder="Enter your password" required>
-        <button type="submit">Login</button>
-    </form>
-
-    <div class="register-link">
-        Don't have an account? <a href="/auth/register">Register here</a>
-    </div>
-</div>
-
 <script>
+  document.addEventListener('DOMContentLoaded', function() {
     console.log("Login page loaded");
+  });
 </script>
 
 <%- include('../partials/footer') %>
