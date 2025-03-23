@@ -51,9 +51,8 @@ npm install
 
 3. **Create a `.env` file**
 ```
-PORT=3000
-MONGO_URI=your_mongo_connection_string
-SESSION_SECRET=your_session_secret
+PORT=5000
+MONGO_URI=https://localhost:5000
 ```
 
 4. **Run the app**
@@ -62,10 +61,10 @@ node app.js
 ```
 or
 ```bash
-npx nodemon app.js
+nodemon app.js
 ```
 
-Visit `http://localhost:3000`
+Visit `http://localhost:5000`
 
 ---
 
@@ -92,4 +91,3 @@ app.js       -> Main server file
 - Wrap up applied jobs view and recruiter’s applicant management
 - Start integrating LinkedIn posts and LeetCode stats
 - Polish the AI recommendations
-
