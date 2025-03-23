@@ -3,94 +3,1484 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>User Profile - SkillVouch</title>
-  <!-- Bootstrap CSS -->
+  <title><%= currentUser.username %> | SkillVouch Profile</title>
+  
+  <!-- CSS Dependencies -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
+    :root {
+      --primary-color: #4361ee;
+      --primary-light: #e9efff;
+      --primary-dark: #3a56d4;
+      --secondary-color: #64dfdf;
+      --accent-color: #7209b7;
+      --success-color: #06d6a0;
+      --warning-color: #ffd166;
+      --danger-color: #ef476f;
+      --text-dark: #2b2d42;
+      --text-light: #8d99ae;
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --border-radius: 12px;
+      --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s ease;
+    }
+    
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-dark);
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      min-height: 100vh;
+    }
+    
+    /* Container styles */
+    .profile-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    
+    /* Profile header */
     .profile-header {
+      position: relative;
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 40px;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+    
+    .profile-header-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background-color: var(--primary-light);
+      z-index: 1;
+    }
+    
+    .profile-content-wrapper {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      align-items: center;
+    }
+    
+    /* Avatar area */
+    .profile-avatar-wrapper {
+      position: relative;
+      margin-top: 10px;
+    }
+    
+    .profile-avatar {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 5px solid white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      object-fit: cover;
+      background-color: #f0f0f0;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-top: 20px;
+      justify-content: center;
+      overflow: hidden;
     }
-    .profile-header img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
+    
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
     }
-    .profile-header h2 {
-      font-size: 2rem;
-      font-weight: bold;
+    
+    .profile-avatar-placeholder {
+      color: var(--text-light);
+      font-size: 48px;
     }
-    .profile-card {
-      background-color: #f9f9f9;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    
+    .avatar-upload-btn {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      width: 40px;
+      height: 40px;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 3px solid white;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     }
+    
+    .avatar-upload-btn:hover {
+      background-color: var(--primary-dark);
+      transform: scale(1.05);
+    }
+    
+    /* Profile info */
     .profile-info {
-      margin-top: 30px;
+      flex: 1;
+      min-width: 250px;
     }
-    .profile-info p {
+    
+    .profile-name {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: var(--text-dark);
+    }
+    
+    .profile-role-badge {
+      display: inline-block;
+      background-color: var(--primary-light);
+      color: var(--primary-color);
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+    
+    .profile-email {
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+    
+    /* Social links */
+    .social-links {
+      display: flex;
+      gap: 12px;
+      margin-top: 15px;
+    }
+    
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background-color: var(--primary-light);
+      color: var(--primary-color);
+      font-size: 18px;
+      transition: var(--transition);
+    }
+    
+    .social-link:hover {
+      transform: translateY(-4px);
+    }
+    
+    .social-link.github:hover {
+      background-color: #333;
+      color: white;
+    }
+    
+    .social-link.linkedin:hover {
+      background-color: #0077b5;
+      color: white;
+    }
+    
+    .social-link.twitter:hover {
+      background-color: #1da1f2;
+      color: white;
+    }
+    
+    .social-link.add {
+      background-color: #f0f0f0;
+      color: var(--text-light);
+    }
+    
+    .social-link.add:hover {
+      background-color: #e0e0e0;
+      color: var(--text-dark);
+    }
+    
+    /* Profile actions */
+    .profile-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    .btn-profile-action {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 500;
+      transition: var(--transition);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(67, 97, 238, 0.2);
+    }
+    
+    .btn-outline-secondary {
+      border-color: #e0e0e0;
+      color: var(--text-dark);
+    }
+    
+    .btn-outline-secondary:hover {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+      background-color: white;
+      transform: translateY(-2px);
+    }
+    
+    /* Grid layout for profile content */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 25px;
+    }
+    
+    /* Card components */
+    .profile-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 30px;
+      height: 100%;
+      transition: var(--transition);
+      border: 1px solid rgba(0, 0, 0, 0.03);
+    }
+    
+    .profile-card:hover {
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+      transform: translateY(-3px);
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .card-title {
       font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .profile-info label {
-      font-weight: bold;
+    
+    .card-title i {
+      color: var(--primary-color);
+      font-size: 1.1em;
     }
-    .form-control {
-      border-radius: 5px;
+    
+    .card-action {
+      color: var(--text-light);
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+    
+    .card-action:hover {
+      background-color: var(--primary-light);
+      color: var(--primary-color);
+    }
+    
+    /* Bio section */
+    .bio-text {
+      color: var(--text-dark);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+    
+    .bio-placeholder {
+      color: var(--text-light);
+      font-style: italic;
+    }
+    
+    /* Skills section */
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .skill-tag {
+      background-color: var(--primary-light);
+      color: var(--primary-color);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+    
+    .skill-tag:hover {
+      background-color: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .skill-input-group {
+      display: flex;
+      margin-top: 15px;
+    }
+    
+    .skill-input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px 0 0 10px;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    
+    .skill-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+    }
+    
+    .skill-add-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0 20px;
+      border-radius: 0 10px 10px 0;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .skill-add-btn:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    /* GitHub contribution section */
+    .github-chart {
+  background-color: #f6f8fa;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 15px;
+  position: relative;
+  width: 100%; /* Ensure it takes full width of its container */
+  min-height: 180px; /* Increase minimum height */
+  display: block; /* Change from flex to block */
+  overflow: hidden; /* Handle any overflow */
+}
+    .github-placeholder {
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .github-icon {
+      font-size: 36px;
+      color: var(--text-light);
+      margin-bottom: 15px;
+    }
+    
+    .github-msg {
+      color: var(--text-light);
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+    }
+
+    .github-chart img {
+  width: 100%; /* Make the image take full width */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Remove any extra spacing */
+}
+    
+    .btn-github-connect {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    
+    .btn-github-connect:hover {
+      background-color: #000;
+      transform: translateY(-2px);
+    }
+    
+    /* Gigs section */
+    .gig-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .gig-card {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      background-color: #f9fafc;
+      transition: var(--transition);
+    }
+    
+    .gig-card:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .gig-icon {
+      width: 45px;
+      height: 45px;
+      background-color: var(--accent-color);
+      color: white;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    
+    .gig-applied .gig-icon {
+      background-color: var(--success-color);
+    }
+    
+    .gig-info {
+      flex: 1;
+    }
+    
+    .gig-title {
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+    
+    .gig-meta {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: var(--text-light);
+      font-size: 0.8rem;
+    }
+    
+    .gig-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .gig-status {
+      margin-left: auto;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background-color: var(--warning-color);
+      color: #664500;
+    }
+    
+    .gig-status.active {
+      background-color: var(--success-color);
+      color: #004438;
+    }
+    
+    .gig-status.closed {
+      background-color: #e0e0e0;
+      color: var(--text-light);
+    }
+    
+    .placeholder-message {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--text-light);
+    }
+    
+    .placeholder-icon {
+      font-size: 36px;
+      margin-bottom: 15px;
+      color: #e0e0e0;
+    }
+    
+    .placeholder-text {
+      margin-bottom: 20px;
+    }
+    
+    /* Modal styles */
+    .modal-content {
+      border-radius: var(--border-radius);
+      border: none;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+    }
+    
+    .modal-header {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 20px 25px;
+    }
+    
+    .modal-title {
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    
+    .modal-body {
+      padding: 25px;
+    }
+    
+    .modal-footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 15px 25px;
+    }
+    
+    /* Form elements */
+    .form-label {
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    
+    .form-control, .form-select {
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: 1px solid #e0e0e0;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+    }
+    
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .form-text {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    
+    .social-input-group {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    
+    .social-input-icon {
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f0f0f0;
+      border: 1px solid #e0e0e0;
+      border-right: none;
+      border-radius: 10px 0 0 10px;
+      color: var(--text-light);
+    }
+    
+    .social-input {
+      flex: 1;
+      border-radius: 0 10px 10px 0;
+    }
+    
+    .social-connect-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 25px;
+    }
+    
+    .btn-social-connect {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 500;
+      transition: var(--transition);
+      color: white;
+      border: none;
+    }
+    
+    .btn-social-connect:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-github {
+      background-color: #333;
+    }
+    
+    .btn-github:hover {
+      background-color: #000;
+    }
+    
+    .btn-linkedin {
+      background-color: #0077b5;
+    }
+    
+    .btn-linkedin:hover {
+      background-color: #005582;
+    }
+    
+    .btn-twitter {
+      background-color: #1da1f2;
+    }
+    
+    .btn-twitter:hover {
+      background-color: #0c85d0;
+    }
+    
+    /* Avatar preview in modal */
+    .avatar-preview-container {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 20px;
+      position: relative;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .avatar-preview {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .avatar-preview-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f0f0f0;
+      color: var(--text-light);
+      font-size: 36px;
+    }
+    
+    /* Toast notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1050;
+    }
+    
+    .toast {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      width: 300px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+    
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .toast-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: var(--success-color);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .toast-icon.error {
+      background-color: var(--danger-color);
+    }
+    
+    .toast-content {
+      flex: 1;
+    }
+    
+    .toast-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 3px;
+    }
+    
+    .toast-message {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 991px) {
+      .profile-header {
+        padding: 30px;
+      }
+      
+      .profile-content-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .profile-avatar-wrapper {
+        margin: 0 auto;
+      }
+      
+      .profile-info {
+        text-align: center;
+        width: 100%;
+      }
+      
+      .profile-email,
+      .social-links {
+        justify-content: center;
+      }
+      
+      .profile-actions {
+        margin-top: 20px;
+        width: 100%;
+        justify-content: center;
+      }
+    }
+    
+    @media (max-width: 767px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-
-    <%- include('../partials/header') %>
-
-<div class="container mt-5">
-  <div class="profile-header">
-    <div>
-      <img src="<%= currentUser.profileImage || '/images/default-profile.png' %>" alt="Profile Image">
+  
+  <%- include('../partials/header') %>
+  
+  <div class="profile-container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="profile-header-bg"></div>
+      
+      <div class="profile-content-wrapper">
+        <div class="profile-avatar-wrapper">
+          <div class="profile-avatar">
+            <% if (currentUser.profileImage) { %>
+              <img src="<%= currentUser.profileImage %>" alt="<%= currentUser.username %>'s Profile">
+            <% } else { %>
+              <div class="profile-avatar-placeholder">
+                <i class="fas fa-user"></i>
+              </div>
+            <% } %>
+          </div>
+          <label for="avatar-upload-input" class="avatar-upload-btn">
+            <i class="fas fa-camera"></i>
+          </label>
+          <input type="file" id="avatar-upload-input" accept="image/*" style="display: none;">
+        </div>
+        
+        <div class="profile-info">
+          <h1 class="profile-name"><%= currentUser.username %></h1>
+          <div class="profile-role-badge"><%= currentUser.role %></div>
+          <div class="profile-email">
+            <i class="fas fa-envelope"></i>
+            <%= currentUser.email %>
+          </div>
+          
+          <div class="social-links">
+            <% if (currentUser.socialLinks && currentUser.socialLinks.github) { %>
+              <a href="<%= currentUser.socialLinks.github %>" target="_blank" class="social-link github" title="GitHub">
+                <i class="fab fa-github"></i>
+              </a>
+            <% } %>
+            
+            <% if (currentUser.socialLinks && currentUser.socialLinks.linkedin) { %>
+              <a href="<%= currentUser.socialLinks.linkedin %>" target="_blank" class="social-link linkedin" title="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            <% } %>
+            
+            <% if (currentUser.socialLinks && currentUser.socialLinks.twitter) { %>
+              <a href="<%= currentUser.socialLinks.twitter %>" target="_blank" class="social-link twitter" title="Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+            <% } %>
+            
+            <button class="social-link add" data-bs-toggle="modal" data-bs-target="#socialLinksModal" title="Add Social Links">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        
+        <div class="profile-actions">
+          <button class="btn btn-primary btn-profile-action" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+            <i class="fas fa-edit"></i>
+            Edit Profile
+          </button>
+          
+          <% if (currentUser.role === 'Recruiter' || currentUser.role === 'Organization') { %>
+            <a href="/gigs/create" class="btn btn-outline-secondary btn-profile-action">
+              <i class="fas fa-plus"></i>
+              Post a Gig
+            </a>
+          <% } else { %>
+            <a href="/gigs" class="btn btn-outline-secondary btn-profile-action">
+              <i class="fas fa-search"></i>
+              Find Gigs
+            </a>
+          <% } %>
+        </div>
+      </div>
     </div>
-    <div>
-      <h2><%= currentUser.username %></h2>
-      <p>Email: <%= currentUser.email %></p>
+    
+    <!-- Profile Grid -->
+    <div class="profile-grid">
+      <!-- About Me Section -->
+      <div class="profile-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fas fa-user-circle"></i>
+            About Me
+          </div>
+          <div class="card-action" data-bs-toggle="modal" data-bs-target="#editBioModal">
+            <i class="fas fa-edit"></i>
+          </div>
+        </div>
+        
+        <% if (currentUser.bio) { %>
+          <div class="bio-text"><%= currentUser.bio %></div>
+        <% } else { %>
+          <div class="bio-placeholder">Add a bio to tell others about yourself and your expertise...</div>
+        <% } %>
+      </div>
+      
+      <!-- Skills Section -->
+      <div class="profile-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fas fa-code"></i>
+            Skills
+          </div>
+        </div>
+        
+        <div class="skills-container">
+          <% if (currentUser.skills && currentUser.skills.length > 0) { %>
+            <% currentUser.skills.forEach(function(skill) { %>
+              <div class="skill-tag"><%= skill %></div>
+            <% }); %>
+          <% } else { %>
+            <div class="bio-placeholder">Add your skills to showcase your expertise...</div>
+          <% } %>
+        </div>
+        
+        <div class="skill-input-group">
+          <input type="text" class="skill-input" id="new-skill-input" placeholder="Add a new skill">
+          <button class="skill-add-btn" id="add-skill-btn">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </div>
+      
+      <!-- GitHub Contributions -->
+      <div class="profile-card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fab fa-github"></i>
+            GitHub Activity
+          </div>
+        </div>
+        
+        <% if (currentUser.socialLinks && currentUser.socialLinks.github) { %>
+          <div class="github-chart">
+            <img src="https://ghchart.rshah.org/<%= currentUser.githubUsername %>" alt="GitHub Contribution Graph" style="width: 100%;">
+          </div>
+        <% } else { %>
+          <div class="github-placeholder">
+            <div class="github-icon">
+              <i class="fab fa-github"></i>
+            </div>
+            <div class="github-msg">Connect your GitHub account to display your contribution graph</div>
+            <button class="btn-github-connect" data-bs-toggle="modal" data-bs-target="#socialLinksModal">
+              <i class="fas fa-link"></i>
+              Connect GitHub
+            </button>
+          </div>
+        <% } %>
+      </div>
+      
+      <!-- Gigs for Recruiters/Organizations -->
+      <% if (currentUser.role === 'Recruiter' || currentUser.role === 'Organization') { %>
+        <div class="profile-card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fas fa-briefcase"></i>
+              My Postings
+            </div>
+          </div>
+          
+          <% if (currentUser.gigsPosted && currentUser.gigsPosted.length > 0) { %>
+            <div class="gig-list">
+              <% currentUser.gigsPosted.forEach(function(gig) { %>
+                <div class="gig-card">
+                  <div class="gig-icon">
+                    <i class="fas fa-briefcase"></i>
+                  </div>
+                  <div class="gig-info">
+                    <div class="gig-title"><%= gig.title %></div>
+                    <div class="gig-meta">
+                      <div class="gig-meta-item">
+                        <i class="far fa-calendar-alt"></i>
+                        Posted <%= new Date(gig.createdAt).toLocaleDateString() %>
+                      </div>
+                      <div class="gig-meta-item">
+                        <i class="fas fa-user-friends"></i>
+                        <%= gig.applications || 0 %> applicants
+                      </div>
+                    </div>
+                  </div>
+                  <div class="gig-status <%= gig.status.toLowerCase() %>"><%= gig.status %></div>
+                </div>
+              <% }); %>
+            </div>
+          <% } else { %>
+            <div class="placeholder-message">
+              <div class="placeholder-icon">
+                <i class="fas fa-briefcase"></i>
+              </div>
+              <div class="placeholder-text">You haven't posted any gigs yet</div>
+              <a href="/gigs/create" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Post a Gig
+              </a>
+            </div>
+          <% } %>
+        </div>
+      <% } else { %>
+        <!-- Applications for Developers/Freelancers -->
+        <div class="profile-card">
+          <div class="card-header">
+            <div class="card-title">
+              <i class="fas fa-file-alt"></i>
+              My Applications
+            </div>
+          </div>
+          
+          <% if (currentUser.gigsApplied && currentUser.gigsApplied.length > 0) { %>
+            <div class="gig-list">
+              <% currentUser.gigsApplied.forEach(function(gig) { %>
+                <div class="gig-card gig-applied">
+                  <div class="gig-icon">
+                    <i class="fas fa-file-alt"></i>
+                  </div>
+                  <div class="gig-info">
+                    <div class="gig-title"><%= gig.title %></div>
+                    <div class="gig-meta">
+                      <div class="gig-meta-item">
+                        <i class="far fa-calendar-alt"></i>
+                        Applied <%= new Date(gig.appliedAt).toLocaleDateString() %>
+                      </div>
+                      <div class="gig-meta-item">
+                        <i class="fas fa-building"></i>
+                        <%= gig.organization %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="gig-status <%= gig.status.toLowerCase() %>"><%= gig.status %></div>
+                </div>
+              <% }); %>
+            </div>
+          <% } else { %>
+            <div class="placeholder-message">
+              <div class="placeholder-icon">
+                <i class="fas fa-file-alt"></i>
+              </div>
+              <div class="placeholder-text">You haven't applied to any gigs yet</div>
+              <a href="/gigs" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+                Find Gigs
+              </a>
+            </div>
+          <% } %>
+        </div>
+      <% } %>
     </div>
   </div>
-
-  <!-- Profile Information Section -->
-  <div class="profile-card mt-4">
-    <div class="profile-info">
-      <h3>Profile Information</h3>
-      <form action="/users/update" method="POST" enctype="multipart/form-data">
-        <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
-          <input type="text" class="form-control" id="username" name="username" value="<%= currentUser.username %>" required>
+  
+  <!-- Edit Profile Modal -->
+  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" name="email" value="<%= currentUser.email %>" disabled>
+        <div class="modal-body">
+          <form id="edit-profile-form">
+            <div class="mb-3">
+              <label for="profile-username" class="form-label">Username</label>
+              <input type="text" class="form-control" id="profile-username" value="<%= currentUser.username %>">
+            </div>
+            <div class="mb-3">
+              <label for="profile-email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="profile-email" value="<%= currentUser.email %>">
+            </div>
+            <div class="mb-3">
+              <label for="profile-role" class="form-label">Role</label>
+              <select class="form-select" id="profile-role">
+                <option value="Developer" <%= currentUser.role === 'Developer' ? 'selected' : '' %>>Developer</option>
+                <option value="Freelancer" <%= currentUser.role === 'Freelancer' ? 'selected' : '' %>>Freelancer</option>
+                <option value="Recruiter" <%= currentUser.role === 'Recruiter' ? 'selected' : '' %>>Recruiter</option>
+                <option value="Organization" <%= currentUser.role === 'Organization' ? 'selected' : '' %>>Organization</option>
+              </select>
+            </div>
+          </form>
         </div>
-
-        <div class="mb-3">
-          <label for="profileImage" class="form-label">Profile Image</label>
-          <input type="file" class="form-control" id="profileImage" name="profileImage">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="save-profile-btn">Save Changes</button>
         </div>
-
-        <button type="submit" class="btn btn-primary">Update Profile</button>
-      </form>
+      </div>
     </div>
   </div>
-</div>
+  
+  <!-- Edit Bio Modal -->
+  <div class="modal fade" id="editBioModal" tabindex="-1" aria-labelledby="editBioModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editBioModalLabel">Edit Bio</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="edit-bio-form">
+            <div class="mb-3">
+              <label for="profile-bio" class="form-label">About Me</label>
+              <textarea class="form-control" id="profile-bio" rows="6"><%= currentUser.bio || '' %></textarea>
+              <div class="form-text">Tell others about yourself, your expertise, and what you're passionate about.</div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="save-bio-btn">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Social Links Modal -->
+  <div class="modal fade" id="socialLinksModal" tabindex="-1" aria-labelledby="socialLinksModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="socialLinksModalLabel">Social Media Links</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="social-links-form">
+            <div class="mb-3">
+              <label for="github-link" class="form-label">GitHub</label>
+              <div class="social-input-group">
+                <div class="social-input-icon">
+                  <i class="fab fa-github"></i>
+                </div>
+                <input type="text" class="form-control social-input" id="github-link" 
+                       value="<%= currentUser.socialLinks && currentUser.socialLinks.github || '' %>" 
+                       placeholder="https://github.com/username">
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="linkedin-link" class="form-label">LinkedIn</label>
+              <div class="social-input-group">
+                <div class="social-input-icon">
+                  <i class="fab fa-linkedin-in"></i>
+                </div>
+                <input type="text" class="form-control social-input" id="linkedin-link" 
+                       value="<%= currentUser.socialLinks && currentUser.socialLinks.linkedin || '' %>" 
+                       placeholder="https://linkedin.com/in/username">
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="twitter-link" class="form-label">Twitter</label>
+              <div class="social-input-group">
+                <div class="social-input-icon">
+                  <i class="fab fa-twitter"></i>
+                </div>
+                <input type="text" class="form-control social-input" id="twitter-link" 
+                       value="<%= currentUser.socialLinks && currentUser.socialLinks.twitter || '' %>" 
+                       placeholder="https://twitter.com/username">
+              </div>
+            </div>
+            
+            <div class="social-connect-options">
+              <button type="button" class="btn-social-connect btn-github">
+                <i class="fab fa-github"></i>
+                Connect with GitHub
+              </button>
+              
+              <button type="button" class="btn-social-connect btn-linkedin">
+                <i class="fab fa-linkedin-in"></i>
+                Connect with LinkedIn
+              </button>
+              
+              <button type="button" class="btn-social-connect btn-twitter">
+                <i class="fab fa-twitter"></i>
+                Connect with Twitter
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="save-social-links-btn">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Avatar Upload Modal -->
+  <div class="modal fade" id="avatarUploadModal" tabindex="-1" aria-labelledby="avatarUploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="avatarUploadModalLabel">Upload Profile Picture</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <div class="avatar-preview-container">
+            <div id="avatar-preview" class="avatar-preview-placeholder">
+              <i class="fas fa-user"></i>
+            </div>
+          </div>
+          
+          <input type="file" id="avatar-file-input" accept="image/*" style="display: none;">
+          <button class="btn btn-outline-primary mb-3" id="browse-avatar-btn">
+            <i class="fas fa-file-image"></i>
+            Browse Image
+          </button>
+          
+          <div class="form-text mb-3">
+            Upload a square image that's at least 300x300 pixels for best results.<br>
+            Maximum file size: 5MB.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="save-avatar-btn">Save Profile Picture</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Toast notification container -->
+  <div class="toast-container"></div>
+  
+  <!-- JavaScript Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Avatar upload interaction
+      const avatarUploadInput = document.getElementById('avatar-upload-input');
+      const avatarPreview = document.getElementById('avatar-preview');
+      const browseAvatarBtn = document.getElementById('browse-avatar-btn');
+      const avatarFileInput = document.getElementById('avatar-file-input');
+      const avatarUploadModal = new bootstrap.Modal(document.getElementById('avatarUploadModal'));
+      
+      // Open modal when clicking the avatar upload button
+      avatarUploadInput.addEventListener('change', function(e) {
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            document.getElementById('avatar-preview').innerHTML = `<img src="${e.target.result}" class="avatar-preview">`;
+          };
+          
+          reader.readAsDataURL(this.files[0]);
+          avatarUploadModal.show();
+        }
+      });
+      
+      // Browse avatar button in modal
+      browseAvatarBtn.addEventListener('click', function() {
+        avatarFileInput.click();
+      });
+      
+      avatarFileInput.addEventListener('change', function(e) {
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            document.getElementById('avatar-preview').innerHTML = `<img src="${e.target.result}" class="avatar-preview">`;
+          };
+          
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+      
+      // Save avatar button
+      document.getElementById('save-avatar-btn').addEventListener('click', function() {
+        if (avatarFileInput.files && avatarFileInput.files[0]) {
+          // In a real implementation, this would upload the file to the server
+          // For demonstration purposes, we'll just update the UI and show a success message
+          
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            // Update avatar in the profile
+            const profileAvatar = document.querySelector('.profile-avatar');
+            profileAvatar.innerHTML = `<img src="${e.target.result}" alt="Profile Image">`;
+            
+            // Close modal
+            avatarUploadModal.hide();
+            
+            // Show success toast
+            showToast('Success', 'Profile picture updated successfully!', 'success');
+          };
+          
+          reader.readAsDataURL(avatarFileInput.files[0]);
+        } else {
+          showToast('Error', 'Please select an image first.', 'error');
+        }
+      });
+      
+      // Skills management
+      const addSkillBtn = document.getElementById('add-skill-btn');
+      const newSkillInput = document.getElementById('new-skill-input');
+      const skillsContainer = document.querySelector('.skills-container');
+      
+      addSkillBtn.addEventListener('click', function() {
+        const skillText = newSkillInput.value.trim();
+        
+        if (skillText) {
+          // Check if skill already exists
+          const existingSkills = Array.from(document.querySelectorAll('.skill-tag')).map(tag => tag.textContent);
+          
+          if (!existingSkills.includes(skillText)) {
+            // Create new skill tag
+            const skillTag = document.createElement('div');
+            skillTag.className = 'skill-tag';
+            skillTag.textContent = skillText;
+            
+            // Clear placeholder if it exists
+            const placeholder = skillsContainer.querySelector('.bio-placeholder');
+            if (placeholder) {
+              skillsContainer.innerHTML = '';
+            }
+            
+            // Add to container
+            skillsContainer.appendChild(skillTag);
+            
+            // Clear input
+            newSkillInput.value = '';
+            
+            // Show success toast
+            showToast('Success', 'Skill added successfully!', 'success');
+          } else {
+            showToast('Error', 'This skill already exists.', 'error');
+          }
+        } else {
+          showToast('Error', 'Please enter a skill name.', 'error');
+        }
+      });
+      
+      // Save bio
+      document.getElementById('save-bio-btn').addEventListener('click', function() {
+        const bioText = document.getElementById('profile-bio').value.trim();
+        const bioTextContainer = document.querySelector('.bio-text') || document.querySelector('.bio-placeholder');
+        
+        // In a real implementation, this would save to the server
+        // For demonstration, just update the UI
+        if (bioText) {
+          if (bioTextContainer.classList.contains('bio-placeholder')) {
+            bioTextContainer.className = 'bio-text';
+          }
+          bioTextContainer.textContent = bioText;
+          
+          // Close modal
+          bootstrap.Modal.getInstance(document.getElementById('editBioModal')).hide();
+          
+          // Show success toast
+          showToast('Success', 'Bio updated successfully!', 'success');
+        } else {
+          bioTextContainer.className = 'bio-placeholder';
+          bioTextContainer.textContent = 'Add a bio to tell others about yourself and your expertise...';
+          
+          // Close modal
+          bootstrap.Modal.getInstance(document.getElementById('editBioModal')).hide();
+        }
+      });
+      
+      // Save profile info
+      document.getElementById('save-profile-btn').addEventListener('click', function() {
+        const username = document.getElementById('profile-username').value.trim();
+        const email = document.getElementById('profile-email').value.trim();
+        const role = document.getElementById('profile-role').value;
+        
+        if (username && email) {
+          // Update UI
+          document.querySelector('.profile-name').textContent = username;
+          document.querySelector('.profile-role-badge').textContent = role;
+          document.querySelector('.profile-email').innerHTML = `<i class="fas fa-envelope"></i> ${email}`;
+          
+          // Close modal
+          bootstrap.Modal.getInstance(document.getElementById('editProfileModal')).hide();
+          
+          // Show success toast
+          showToast('Success', 'Profile updated successfully!', 'success');
+        } else {
+          showToast('Error', 'Username and email are required.', 'error');
+        }
+      });
+      
+// Save social links
+document.getElementById('save-social-links-btn').addEventListener('click', function() {
+  const githubLink = document.getElementById('github-link').value.trim();
+  const linkedinLink = document.getElementById('linkedin-link').value.trim();
+  const twitterLink = document.getElementById('twitter-link').value.trim();
+  
+  const socialLinksContainer = document.querySelector('.social-links');
+  let html = '';
+  
+  if (githubLink) {
+    html += `<a href="${githubLink}" target="_blank" class="social-link github" title="GitHub">
+              <i class="fab fa-github"></i>
+            </a>`;
+  }
+  
+  if (linkedinLink) {
+    html += `<a href="${linkedinLink}" target="_blank" class="social-link linkedin" title="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>`;
+  }
+  
+  if (twitterLink) {
+    html += `<a href="${twitterLink}" target="_blank" class="social-link twitter" title="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>`;
+  }
+  
+  html += `<button class="social-link add" data-bs-toggle="modal" data-bs-target="#socialLinksModal" title="Add Social Links">
+            <i class="fas fa-plus"></i>
+          </button>`;
+  
+  socialLinksContainer.innerHTML = html;
+  
+  // Close modal properly and ensure backdrop is removed
+  const socialLinksModal = bootstrap.Modal.getInstance(document.getElementById('socialLinksModal'));
+  if (socialLinksModal) {
+    socialLinksModal.hide();
+
+        // This ensures the backdrop is properly removed
+        document.body.classList.remove('modal-open');
+    const modalBackdrops = document.querySelectorAll('.modal-backdrop');
+    modalBackdrops.forEach(backdrop => {
+      backdrop.classList.remove('show');
+      backdrop.remove();
+    });
+  }
+        
+  // Show success toast
+  showToast('Success', 'Social links updated successfully!', 'success');
+  
+  // If GitHub was connected, update the GitHub section without page refresh
+  if (githubLink && !document.querySelector('.github-chart img')) {
+    const githubPlaceholder = document.querySelector('.github-placeholder');
+    const githubUsername = githubLink.split('/').pop();
+    
+    if (githubPlaceholder && githubUsername) {
+      const githubChartHtml = `<img src="https://ghchart.rshah.org/${githubUsername}" alt="GitHub Contribution Graph" style="width: 100%;">`;
+      const githubChartContainer = document.createElement('div');
+      githubChartContainer.className = 'github-chart';
+      githubChartContainer.innerHTML = githubChartHtml;
+      
+      githubPlaceholder.parentNode.replaceChild(githubChartContainer, githubPlaceholder);
+    }
+  }
+});
+      // Toast notification function
+      function showToast(title, message, type = 'success') {
+        const toastContainer = document.querySelector('.toast-container');
+        
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `
+          <div class="toast-icon ${type === 'error' ? 'error' : ''}">
+            <i class="fas fa-${type === 'success' ? 'check' : 'exclamation'}"></i>
+          </div>
+          <div class="toast-content">
+            <div class="toast-title">${title}</div>
+            <div class="toast-message">${message}</div>
+          </div>
+        `;
+        
+        toastContainer.appendChild(toast);
+        
+        // Trigger animation
+        setTimeout(() => {
+          toast.classList.add('show');
+        }, 10);
+        
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+          toast.classList.remove('show');
+          setTimeout(() => {
+            toastContainer.removeChild(toast);
+          }, 300);
+        }, 3000);
+      }
+    });
+
+  //   const modalBackdrops = document.querySelectorAll('.modal-backdrop');
+  // modalBackdrops.forEach(backdrop => {
+  //   backdrop.classList.remove('show');
+  //   setTimeout(() => {
+  //     backdrop.remove();
+  //   }, 150);
+  // });
 
 
-<%- include('../partials/footer') %>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+
+  </script>
+  
+  <%- include('../partials/footer') %>
 </body>
 </html>
