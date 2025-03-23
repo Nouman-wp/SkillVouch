@@ -1,0 +1,117 @@
+<%- include('../partials/header') %>
+
+<h1 class="text-center mt-5 mb-4">Your Applied Gigs</h1>
+
+<div class="container mt-4">
+    <% if (gigsApplied.length === 0) { %>
+        <div class="alert alert-info text-center">You haven't applied for any gigs yet.</div>
+    <% } else { %>
+        <div class="row">
+            <% gigsApplied.forEach(gig => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card gig-card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= gig.title %></h5>
+                            <p class="card-text"><%= gig.description.length > 120 ? gig.description.substring(0, 120) + '...' : gig.description %></p>
+                            <a href="/gigs/<%= gig._id %>" class="btn btn-success view-btn">View Gig</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+</div>
+
+<style>
+    body {
+        background-color: #f9f9f9;
+    }
+
+    h1 {
+        font-weight: 700;
+        color: #333;
+    }
+
+    .gig-card {
+        background-color: #fff;
+        border-radius: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gig-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .card-text {
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    .view-btn {
+        background-color: #28a745;
+        border: none;
+        transition: background-color 0.3s;
+        width: 100%;
+    }
+
+    .view-btn:hover {
+        background-color: #218838;
+    }
+
+    .alert {
+        font-size: 1.2rem;
+        border-radius: 10px;
+    }
+</style>
+
+<script>
+    // Optional toast message when "View Gig" is clicked
+    const viewButtons = document.querySelectorAll('.view-btn');
+    viewButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const gigLink = button.getAttribute('href');
+            const toast = document.createElement('div');
+            toast.className = 'toast-message';
+            toast.textContent = 'Redirecting to Gig...';
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.remove();
+                window.location.href = gigLink;
+            }, 1000);
+        });
+    });
+
+    // Styling the toast dynamically
+    const style = document.createElement('style');
+    style.textContent = `
+        .toast-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 9999;
+            animation: fadeInOut 1s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(-20px); }
+            50% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+
+<%- include('../partials/footer') %>

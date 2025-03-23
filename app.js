@@ -11,7 +11,8 @@ const dashboardRoutes = require('./routes/dashboard');
 app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));
 const recruiterRoutes = require('./routes/recruiter');
-
+const gigRoutes = require('./routes/gigs');
+const gigsRoutes = require('./routes/gigs');
 
 
 
@@ -50,13 +51,18 @@ app.use('/dashboard', dashboardRoutes);
 
 
 // Routes
-app.use('/', require('./routes/index'));
 app.use('/auth', authRoutes);
-app.use('/gigs', require('./routes/gigs'));
+app.use('/gigs', gigRoutes);  // Keep only this for gigs
 app.use('/users', require('./routes/users'));
-app.use('/', organizationRoutes);
-
+app.use('/dashboard', dashboardRoutes);
+app.use('/organization', organizationRoutes);
+app.use('/', require('./routes/index'));
 app.use(recruiterRoutes);
+
+app.use('/gigs', gigsRoutes);
+app.use('/gigs', require('./routes/gigs'));
+
+
 
 
 app.use((req, res, next) => {
@@ -74,6 +80,9 @@ app.use((req, res, next) => {
       message: err.message || "Something went wrong. Please try again later."
     });
   });
+  
+
+  // app.use(gigRoutes);
   
 
 app.listen(PORT, () => console.log(`Server running on localhost:${PORT}`));

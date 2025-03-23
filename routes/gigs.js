@@ -37,6 +37,26 @@ router.post('/', isLoggedIn, async (req, res) => {
     res.redirect('/gigs');
 });
 
+// View single gig
+router.get('/:id', async (req, res) => {
+    try {
+        const gig = await Gig.findById(req.params.id).populate('postedBy');
+        if (!gig) {
+            req.flash('error', 'Gig not found');
+            return res.redirect('/gigs');
+        }
+
+        const applications = await Application.find({ gig: gig._id }).populate('applicant');
+        res.render('gigs/gigDetails', { gig, applications });
+    } catch (err) {
+        console.error(err);
+        req.flash('error', 'Something went wrong');
+        res.redirect('/gigs');
+    }
+});
+
+
+
 // Edit Gig Route
 router.get('/edit/:id', isLoggedIn, async (req, res) => {
     try {
@@ -58,7 +78,6 @@ router.get('/edit/:id', isLoggedIn, async (req, res) => {
         res.redirect('/dashboard');
     }
 });
-
 
 
 // Delete Gig Route
@@ -128,26 +147,6 @@ router.post('/:id/apply', isLoggedIn, upload.single('resume'), async (req, res) 
         res.redirect(`/gigs/${req.params.id}`);
     }
 });
-
-// ✅ Final View single gig with applications
-router.get('/:id', async (req, res) => {
-    try {
-        const gig = await Gig.findById(req.params.id).populate('postedBy');
-        if (!gig) {
-            req.flash('error', 'Gig not found');
-            return res.redirect('/gigs');
-        }
-
-        const applications = await Application.find({ gig: gig._id }).populate('applicant');
-        res.render('gigs/gigDetails', { gig, applications });
-    } catch (err) {
-        console.error(err);
-        req.flash('error', 'Something went wrong');
-        res.redirect('/gigs');
-    }
-});
-
-
 
 
 

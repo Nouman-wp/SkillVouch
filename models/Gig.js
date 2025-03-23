@@ -38,4 +38,5 @@ const gigSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Gig', gigSchema);
+module.exports = mongoose.models.Gig || mongoose.model('Gig', gigSchema);
+
