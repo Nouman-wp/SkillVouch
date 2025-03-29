@@ -81,7 +81,7 @@ app.js       -> Main server file
 ---
 
 ## Roadblocks / Challenges
-- LinkedIn API integration is tough due to OAuth and access limitations
+- LinkedIn API integration is tough due to OAuth and access limitations from server side 
 - LeetCode work-proof feature is still under testing
 - AI recommendation takes time, working on it for later versions
 
